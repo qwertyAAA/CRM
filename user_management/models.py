@@ -25,8 +25,6 @@ class Role(models.Model):
     role_name = models.CharField(max_length=32, verbose_name="角色名")
     user = models.ManyToManyField(
         to=User,
-        through="User2Role",
-        through_fields=("role", "user"),
         verbose_name="用户"
     )
 
@@ -38,8 +36,6 @@ class Permission(models.Model):
     info = models.OneToOneField(to="PermissionInfo", to_field="id", verbose_name="权限信息")
     role = models.ManyToManyField(
         to="Role",
-        through="Role2Permission",
-        through_fields=("permission", "role"),
         verbose_name="角色"
     )
 
