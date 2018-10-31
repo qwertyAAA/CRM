@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'data_manage.apps.DataManageConfig',
     'organization',
+    'employee_management',
 ]
 
 MIDDLEWARE = [
