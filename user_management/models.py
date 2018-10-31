@@ -41,17 +41,3 @@ class PermissionInfo(models.Model):
     select = models.BooleanField(default=True, verbose_name="查看权限")
 
 
-# 员工信息表
-class Staff(models.Model):
-    id = models.AutoField(primary_key=True)
-    staff_salary = models.FloatField(max_length=32, verbose_name="员工薪资")
-    staff_state = models.BooleanField(default=True, verbose_name="员工状态")
-    info = models.ManyToManyField(to="UserInfo", to_field="id", verbose_name="员工信息id")
-
-
-# 部门信息表
-class Department(models.Model):
-    id = models.AutoField(primary_key=True)
-    department_name = models.CharField(max_length=32, verbose_name="部门名称")
-    leader_title = models.CharField(max_length=32, verbose_name="领导职称")
-    info = models.ManyToManyField(to="Staff", to_field="id", verbose_name="部门信息id")
