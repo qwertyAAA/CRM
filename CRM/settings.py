@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'data_manage.apps.DataManageConfig',
+    'organization',
+    'employee_management',
     'user_management.apps.UserManagementConfig',
 ]
 

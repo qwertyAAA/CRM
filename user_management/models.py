@@ -33,6 +33,7 @@ class Role(models.Model):
 class Permission(models.Model):
     id = models.AutoField(primary_key=True)
     permission_name = models.CharField(max_length=32)
+    info = models.OneToOneField(to="PermissionInfo", to_field="id", verbose_name="权限信息id")
     info = models.OneToOneField(to="PermissionInfo", to_field="id", verbose_name="权限信息")
     role = models.ManyToManyField(
         to="Role",
@@ -47,8 +48,5 @@ class PermissionInfo(models.Model):
     delete = models.BooleanField(default=False, verbose_name="删除权限")
     change = models.BooleanField(default=False, verbose_name="修改权限")
     select = models.BooleanField(default=True, verbose_name="查看权限")
-    personnel = models.BooleanField(default=False, verbose_name="属于人事部")
-    technology = models.BooleanField(default=False, verbose_name="属于技术部")
-    finance = models.BooleanField(default=False, verbose_name="属于财务部")
-    sales = models.BooleanField(default=False, verbose_name="属于销售部")
-    boss = models.BooleanField(default=False, verbose_name="是不是boss")
+
+
