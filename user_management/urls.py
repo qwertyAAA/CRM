@@ -14,12 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from django.contrib import admin
-from django.conf.urls import include
-from main_page import views as mpv
+from user_management import views
 
 urlpatterns = [
-    url(r"^$", mpv.index),
-    url(r'^admin/', admin.site.urls),
-    url(r"^user_management/", include("user_management.urls"))
+    url(r"^users/", views.users_list)
 ]
