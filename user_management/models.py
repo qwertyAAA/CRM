@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+
+
 # Create your models here.
 
 
@@ -54,6 +56,3 @@ class PermissionInfo(models.Model):
     finance = models.BooleanField(default=False, verbose_name="属于财务部")
     sales = models.BooleanField(default=False, verbose_name="属于销售部")
     boss = models.BooleanField(default=False, verbose_name="是不是boss")
-
-
-
