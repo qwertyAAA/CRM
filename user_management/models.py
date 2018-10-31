@@ -23,6 +23,10 @@ class UserInfo(models.Model):
 class Role(models.Model):
     id = models.AutoField(primary_key=True)
     role_name = models.CharField(max_length=32, verbose_name="角色名")
+    user = models.ManyToManyField(
+        to=User,
+        verbose_name="用户"
+    )
 
 
 # 权限表
@@ -30,6 +34,11 @@ class Permission(models.Model):
     id = models.AutoField(primary_key=True)
     permission_name = models.CharField(max_length=32)
     info = models.OneToOneField(to="PermissionInfo", to_field="id", verbose_name="权限信息id")
+    info = models.OneToOneField(to="PermissionInfo", to_field="id", verbose_name="权限信息")
+    role = models.ManyToManyField(
+        to="Role",
+        verbose_name="角色"
+    )
 
 
 # 权限信息表

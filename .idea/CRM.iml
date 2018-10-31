@@ -21,7 +21,7 @@
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="D:/CRM\templates" />
+        <option value="$MODULE_DIR$/../CRM\templates" />
       </list>
     </option>
   </component>
