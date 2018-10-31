@@ -33,7 +33,6 @@ class Role(models.Model):
 class Permission(models.Model):
     id = models.AutoField(primary_key=True)
     permission_name = models.CharField(max_length=32)
-    info = models.OneToOneField(to="PermissionInfo", to_field="id", verbose_name="权限信息id")
     info = models.OneToOneField(to="PermissionInfo", to_field="id", verbose_name="权限信息")
     role = models.ManyToManyField(
         to="Role",
