@@ -22,6 +22,6 @@ from main_page import views as mpv
 urlpatterns = [
     url(r"^$", mpv.index),
     url(r'^admin/', admin.site.urls),
-    url(r"^user_management/", include("user_management.urls")),
+    # url(r"^user_management/", include("user_management.urls")),
     # url(r'^data_manage/',include('data_manage')),
 ]
