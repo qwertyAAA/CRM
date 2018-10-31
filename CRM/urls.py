@@ -17,7 +17,7 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from django.conf.urls import include
 from main_page import views as mpv
-# from data_manage import urls as data_manage_urls
+from data_manage import urls as data_manage_urls
 
 urlpatterns = [
     url(r"^$", mpv.index),
