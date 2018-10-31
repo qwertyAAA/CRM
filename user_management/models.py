@@ -23,13 +23,25 @@ class UserInfo(models.Model):
 class Role(models.Model):
     id = models.AutoField(primary_key=True)
     role_name = models.CharField(max_length=32, verbose_name="角色名")
+    user = models.ManyToManyField(
+        to=User,
+        through="User2Role",
+        through_fields=("role", "user"),
+        verbose_name="用户"
+    )
 
 
 # 权限表
 class Permission(models.Model):
     id = models.AutoField(primary_key=True)
     permission_name = models.CharField(max_length=32)
-    info = models.OneToOneField(to="PermissionInfo", to_field="id", verbose_name="权限信息id")
+    info = models.OneToOneField(to="PermissionInfo", to_field="id", verbose_name="权限信息")
+    role = models.ManyToManyField(
+        to="Role",
+        through="Role2Permission",
+        through_fields=("permission", "role"),
+        verbose_name="角色"
+    )
 
 
 # 权限信息表
@@ -39,19 +51,5 @@ class PermissionInfo(models.Model):
     delete = models.BooleanField(default=False, verbose_name="删除权限")
     change = models.BooleanField(default=False, verbose_name="修改权限")
     select = models.BooleanField(default=True, verbose_name="查看权限")
-
-
-# 员工信息表
-class Staff(models.Model):
-    id = models.AutoField(primary_key=True)
-    staff_salary = models.FloatField(max_length=32, verbose_name="员工薪资")
-    staff_state = models.BooleanField(default=True, verbose_name="员工状态")
-    info = models.ManyToManyField(to="UserInfo", to_field="id", verbose_name="员工信息id")
-
-
-# 部门信息表
-class Department(models.Model):
-    id = models.AutoField(primary_key=True)
-    department_name = models.CharField(max_length=32, verbose_name="部门名称")
-    leader_title = models.CharField(max_length=32, verbose_name="领导职称")
-    info = models.ManyToManyField(to="Staff", to_field="id", verbose_name="部门信息id")
+    
+    
