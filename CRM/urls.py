@@ -19,11 +19,14 @@ from django.conf.urls import include
 from main_page import views as mpv
 from data_manage import urls as data_manage_urls
 from employee_management import urls as employee_management_urls
+from django.views.static import serve
+from CRM import settings
 
 urlpatterns = [
     url(r"^$", mpv.index),
     url(r'^data_manage/', include(data_manage_urls)),
     url(r"^user_management/", include("user_management.urls")),
     url(r"^employee_management/", include(employee_management_urls)),
+    url(r'^media/(?P<path>.*)$', serve, {'document_root':settings.MEDIA_ROOT}),
 
 ]

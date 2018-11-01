@@ -132,5 +132,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
+MEDIA_ROOT=os.path.join(BASE_DIR,"media") #注意:这里配置os的时候,不像配置static的时候要[],这里不需要[]
+MEDIA_URL="/media/"
+
 # Session 的引擎：db+缓存
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
