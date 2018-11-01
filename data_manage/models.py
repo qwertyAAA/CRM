@@ -10,15 +10,15 @@ class Data(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(to=User)
+    data = models.ForeignKey(to='Category', to_field='id')
 
     def __str__(self):
         return self.data_name
 
 
 class Category(models.Model):
-    nid = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=30)  # 分类标题
-    data = models.ForeignKey(to='Data', to_field='id')
 
     def __str__(self):
         return self.title
