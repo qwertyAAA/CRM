@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hans">
 <head>
     <meta charset="UTF-8">
     <title>后台管理</title>
     <link href='/static/bootstrap/css/bootstrap.min.css' rel="stylesheet">
-    <link rel="stylesheet" href="/static/bootstrap/css/style.css" />
+    <link rel="stylesheet" href="/static/bootstrap/css/style.css"/>
     <script src="/static/bootstrap/jquery-3.3.1.min.js"></script>
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
-    <link href="/static/bootstrap/css/" rel="stylesheet">
+    <link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css">
 </head>
 <body>
 {#导航栏#}
@@ -30,31 +30,32 @@
                     </form>
 
                     <li>
-                        <a href="#">权限管理</a>
+                        <a href="#"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> 权限管理</a>
                     </li>
                     <li>
-                        <a href="#">用户管理</a>
+                        <a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 用户管理</a>
                     </li>
                     <li>
-                        <a href="#">系统日志</a>
+                        <a href="#"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 系统日志</a>
                     </li>
                     <li>
-                        <a href="#">在线人数</a>
+                        <a href="#" class="disabled"><i class="fa fa-users" aria-hidden="true"></i> 在线人数</a>
                     </li>
-                    <li role="presentation" class="dropdown" >
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-							用户<span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu" >g
-							<li><a style="font-weight: bolder">个人中心</a></li>
-							<li><a style="font-weight: bolder">注销</a></li>
-						</ul>
-					</li>
+                    <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            用户<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">g
+                            <li><a style="font-weight: bolder">个人中心</a></li>
+                            <li><a style="font-weight: bolder">注销</a></li>
+                        </ul>
+                    </li>
                 </ul>
 
             </div>
-                <!-- /.navbar-collapse -->
-            </div>
+            <!-- /.navbar-collapse -->
+        </div>
         <!-- /.container-fluid -->
     </nav>
 </div>
@@ -68,42 +69,62 @@
             <!-- Sidebar -->
             <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
                 <ul class="nav sidebar-nav">
-                    <li class="sidebar-brand">
-                        <a href="#">
-                           Bootstrap 3
-                        </a>
-                    </li>
+                    <li class="sidebar-brand"></li>
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-home"></i> Home</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-fw fa-folder"></i> Page one</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-fw fa-file-o"></i> Second page</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-fw fa-cog"></i> Third page</a>
+                        <a href="#"><span
+                                class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;主页</a>
                     </li>
                     <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i> Dropdown <span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">
-                        <li class="dropdown-header">Dropdown heading</li>
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li><a href="#">One more separated link</a></li>
-                      </ul>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
+                                class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;客户管理</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="dropdown-header"></li>
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-circle"
+                                                                                      aria-hidden="true"></i>&nbsp;&nbsp;员工管理</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="dropdown-header"></li>
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
+                                class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;资料库管理</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="dropdown-header"></li>
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
+                                class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;用户管理</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="dropdown-header"></li>
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-bank"></i> Page four</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-fw fa-dropbox"></i> Page 5</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-fw fa-twitter"></i> Last page</a>
+                        <a href="#"><span
+                                class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;&nbsp;安全退出</a>
                     </li>
                 </ul>
             </nav>
@@ -111,18 +132,19 @@
 
             <!-- Page Content -->
             <div id="page-content-wrapper">
-              <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
-                <span class="hamb-top"></span>
-                <span class="hamb-middle"></span>
-                <span class="hamb-bottom"></span>
-              </button>
+                <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                    <span class="hamb-top"></span>
+                    <span class="hamb-middle"></span>
+                    <span class="hamb-bottom"></span>
+                </button>
 
-              <div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>>
+                <div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                >
             </div>
             <!-- /#page-content-wrapper -->
         </div>
