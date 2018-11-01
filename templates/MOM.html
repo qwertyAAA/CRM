@@ -46,7 +46,7 @@
                            aria-expanded="false">
                             用户<span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu">g
+                        <ul class="dropdown-menu">
                             <li><a style="font-weight: bolder">个人中心</a></li>
                             <li><a style="font-weight: bolder">注销</a></li>
                         </ul>
@@ -144,15 +144,35 @@
                     <div></div>
                     <div></div>
                 </div>
-                >
             </div>
             <!-- /#page-content-wrapper -->
         </div>
     </div>
     {#具体显示内容#}
     <div class="col-lg-8">
+        {# 资料库管理模块 #}
         {% block check_data %}
         {% endblock %}
+
+        {#用户管理模块#}
+        {% block create_user %}
+        {% endblock %}
+        {% block auth %}
+        {% endblock %}
+        {% block edit_user %}
+        {% endblock %}
+        {% block change_pwd %}
+        {% endblock %}
+        {% block user_info %}
+        {% endblock %}
+        {% block search_user %}
+        {% endblock %}
+
+        {# 员工管理模块 #}
+        {# to do... #}
+
+        {# 客户管理模块 #}
+        {# to do... #}
     </div>
     {#右侧显示内容(预留)  #}
     <div class="col-lg-2">
