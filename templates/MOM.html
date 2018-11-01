@@ -46,7 +46,7 @@
                            aria-expanded="false">
                             用户<span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu">g
+                        <ul class="dropdown-menu">
                             <li><a style="font-weight: bolder">个人中心</a></li>
                             <li><a style="font-weight: bolder">注销</a></li>
                         </ul>
@@ -115,11 +115,12 @@
                                 class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;用户管理</a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="dropdown-header"></li>
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li><a href="#">One more separated link</a></li>
+                            <li><a href="//">创建用户</a></li>
+                            <li><a href="#">用户授权</a></li>
+                            <li><a href="#">编辑用户</a></li>
+                            <li><a href="#">修改密码</a></li>
+                            <li><a href="#">用户资料</a></li>
+                            <li><a href="#">搜索用户</a></li>
                         </ul>
                     </li>
                     <li>
@@ -144,17 +145,37 @@
                     <div></div>
                     <div></div>
                 </div>
-                >
             </div>
             <!-- /#page-content-wrapper -->
         </div>
     </div>
     {#具体显示内容#}
     <div class="col-lg-8">
+        {# 资料库管理模块 #}
         {% block check_data%}
         {% endblock %}
         {% block add_data %}
         {% endblock %}
+
+        {#用户管理模块#}
+        {% block create_user %}
+        {% endblock %}
+        {% block auth %}
+        {% endblock %}
+        {% block edit_user %}
+        {% endblock %}
+        {% block change_pwd %}
+        {% endblock %}
+        {% block user_info %}
+        {% endblock %}
+        {% block search_user %}
+        {% endblock %}
+
+        {# 员工管理模块 #}
+        {# to do... #}
+
+        {# 客户管理模块 #}
+        {# to do... #}
     </div>
     {#右侧显示内容(预留)  #}
     <div class="col-lg-2">

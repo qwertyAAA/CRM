@@ -10,3 +10,7 @@ def users_list(request):
 
 def test(request):
     return render(request, "MOM.html")
+
+
+def create_user(request):
+    return render(request, "user_management/create_user.html")

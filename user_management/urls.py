@@ -18,5 +18,6 @@ from user_management import views
 
 urlpatterns = [
     url(r"^users/", views.users_list),
-    url(r"^test/", views.test)
+    url(r"^test/", views.test),
+    url(r"^create_user", views.create_user)
 ]
