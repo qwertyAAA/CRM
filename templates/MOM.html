@@ -103,11 +103,11 @@
                                 class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;资料库管理</a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="dropdown-header"></li>
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li><a href="#">One more separated link</a></li>
+                            <li><a href="/data_manage/check/">查看资料</a></li>
+                            <li><a href="/data_manage/add/">新增资料</a></li>
+                            <li><a href="#">pass</a></li>
+                            <li><a href="#">pass</a></li>
+                            <li><a href="#">pass</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -155,6 +155,8 @@
         {% block check_data%}
         {% endblock %}
         {% block add_data %}
+        {% endblock %}
+        {% block edit_data %}
         {% endblock %}
 
         {#用户管理模块#}
