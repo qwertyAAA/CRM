@@ -1151,7 +1151,7 @@ permission_id</ColNames>
       <RefTableName>auth_permission</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="284" parent="213" name="nid">
+    <column id="284" parent="213" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
@@ -1164,73 +1164,73 @@ permission_id</ColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="286" parent="213" name="data_id">
-      <Position>3</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="287" parent="213" name="data_manage_category_data_id_2d089b28_fk_data_manage_data_id">
-      <ColNames>data_id</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="288" parent="213" name="PRIMARY">
+    <key id="286" parent="213" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>nid</ColNames>
+      <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="289" parent="213" name="data_manage_category_data_id_2d089b28_fk_data_manage_data_id">
-      <ColNames>data_id</ColNames>
-      <RefSchemaName>crm</RefSchemaName>
-      <RefTableName>data_manage_data</RefTableName>
-      <RefColNames>id</RefColNames>
-    </foreign-key>
-    <column id="290" parent="214" name="id">
+    <column id="287" parent="214" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="291" parent="214" name="data_name">
+    <column id="288" parent="214" name="data_name">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="292" parent="214" name="comment">
+    <column id="289" parent="214" name="comment">
       <Position>3</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="293" parent="214" name="create_time">
+    <column id="290" parent="214" name="create_time">
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="294" parent="214" name="update_time">
+    <column id="291" parent="214" name="update_time">
       <Position>5</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="295" parent="214" name="user_id">
+    <column id="292" parent="214" name="data_id">
       <Position>6</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="296" parent="214" name="data_manage_data_user_id_f01300cd_fk_auth_user_id">
+    <column id="293" parent="214" name="user_id">
+      <Position>7</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="294" parent="214" name="data_manage_data_data_id_f3578056_fk_data_manage_category_id">
+      <ColNames>data_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="295" parent="214" name="data_manage_data_user_id_f01300cd_fk_auth_user_id">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="297" parent="214" name="PRIMARY">
+    <key id="296" parent="214" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
+    <foreign-key id="297" parent="214" name="data_manage_data_data_id_f3578056_fk_data_manage_category_id">
+      <ColNames>data_id</ColNames>
+      <RefSchemaName>crm</RefSchemaName>
+      <RefTableName>data_manage_category</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
     <foreign-key id="298" parent="214" name="data_manage_data_user_id_f01300cd_fk_auth_user_id">
       <ColNames>user_id</ColNames>
       <RefSchemaName>crm</RefSchemaName>
