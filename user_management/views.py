@@ -6,3 +6,7 @@ from django.http import JsonResponse
 
 def users_list(request):
     return HttpResponse("this is user_list")
+
+
+def test(request):
+    return render(request, "MOM.html")
