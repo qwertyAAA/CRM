@@ -7,7 +7,7 @@ from django.db import models
 class Organ(models.Model):
     # 基本信息
     org_name = models.CharField(max_length=50, blank=False, null=False, verbose_name="机构名称")
-    org_adress = models.CharField(max_length=100, blank=False, null=False, verbose_name="机构地址")
+    org_address = models.CharField(max_length=100, blank=False, null=False, verbose_name="机构地址")
     linkman = models.OneToOneField("Linkman", blank=False, null=False, verbose_name="联系人")
     mobile = models.IntegerField(blank=False, null=False, verbose_name="手机")
     tel = models.IntegerField(blank=False, null=False, verbose_name="电话")
@@ -42,12 +42,12 @@ class Linkman(models.Model):
     phone = models.IntegerField(blank=False, null=False, verbose_name="手机")
     email = models.EmailField(blank=False, null=False, verbose_name="邮箱")
     QQ = models.IntegerField(blank=False, null=False, verbose_name="QQ")
-    adress = models.CharField(max_length=50, blank=True, null=True, verbose_name="地址")
+    address = models.CharField(max_length=50, blank=True, null=True, verbose_name="地址")
     link_important = models.CharField(max_length=10, blank=False, null=False, verbose_name="重要等级")
     following = models.CharField(max_length=10, blank=False, null=False, verbose_name="跟进状态")
     link_agent = models.CharField(max_length=20, blank=False, null=False, verbose_name="经办人")
-    isaccept = models.BooleanField(blank=False, null=False, verbose_name="是否认可")
+    is_accept = models.BooleanField(blank=False, null=False, verbose_name="是否认可")
     remark = models.TextField(max_length=200, blank=True, null=True, verbose_name="备注")
 
     def __str__(self):
-        return "%s--%s" % (self.name, self.org_name)
+        return "%s--%s" % (self.name, self.organ.org_name)
