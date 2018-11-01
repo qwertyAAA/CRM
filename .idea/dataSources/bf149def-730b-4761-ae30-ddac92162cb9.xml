@@ -1200,7 +1200,7 @@ permission_id</ColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="292" parent="214" name="data_id">
+    <column id="292" parent="214" name="category_id">
       <Position>6</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
@@ -1212,8 +1212,8 @@ permission_id</ColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="294" parent="214" name="data_manage_data_data_id_f3578056_fk_data_manage_category_id">
-      <ColNames>data_id</ColNames>
+    <index id="294" parent="214" name="data_manage_data_category_id_1cd9bf60_fk_data_manage_category_id">
+      <ColNames>category_id</ColNames>
       <Type>btree</Type>
     </index>
     <index id="295" parent="214" name="data_manage_data_user_id_f01300cd_fk_auth_user_id">
@@ -1225,8 +1225,8 @@ permission_id</ColNames>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="297" parent="214" name="data_manage_data_data_id_f3578056_fk_data_manage_category_id">
-      <ColNames>data_id</ColNames>
+    <foreign-key id="297" parent="214" name="data_manage_data_category_id_1cd9bf60_fk_data_manage_category_id">
+      <ColNames>category_id</ColNames>
       <RefSchemaName>crm</RefSchemaName>
       <RefTableName>data_manage_category</RefTableName>
       <RefColNames>id</RefColNames>
