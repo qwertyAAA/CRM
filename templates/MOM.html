@@ -23,17 +23,11 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <!--//navbar-left，navbar-right类控制导航栏中属性的靠左还是靠右-->
                 <ul class="nav navbar-nav navbar-right">
-                    <form class="navbar-form navbar-left">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
-                        </div>
-                    </form>
-
                     <li>
-                        <a href="#"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> 权限管理</a>
+                        <a href="/user_management/role_permission/"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> 权限管理</a>
                     </li>
                     <li>
-                        <a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 用户管理</a>
+                        <a href="/user_management/user_info/"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 用户管理</a>
                     </li>
                     <li>
                         <a href="#"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 系统日志</a>
@@ -115,12 +109,13 @@
                                 class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;用户管理</a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="dropdown-header"></li>
-                            <li><a href="//">创建用户</a></li>
-                            <li><a href="#">用户授权</a></li>
-                            <li><a href="#">编辑用户</a></li>
-                            <li><a href="#">修改密码</a></li>
-                            <li><a href="#">用户资料</a></li>
-                            <li><a href="#">搜索用户</a></li>
+                            <li><a href="/user_management/role_permission/">权限管理</a></li>
+                            <li><a href="/user_management/edit_user/">创建用户</a></li>
+                            <li><a href="/user_management/auth/">用户授权</a></li>
+                            <li><a href="/user_management/edit_user/">编辑用户</a></li>
+                            <li><a href="/user_management/change_pwd/">修改密码</a></li>
+                            <li><a href="/user_management/user_info/">用户资料</a></li>
+                            <li><a href="/user_management/search_user/">搜索用户</a></li>
                         </ul>
                     </li>
                     <li>
@@ -160,6 +155,10 @@
         {% endblock %}
 
         {#用户管理模块#}
+        {% block role_permission %}
+        {% endblock %}
+        {% block edit_role %}
+        {% endblock %}
         {% block create_user %}
         {% endblock %}
         {% block auth %}
