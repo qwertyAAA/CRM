@@ -17,7 +17,11 @@ from django.conf.urls import url
 from user_management import views
 
 urlpatterns = [
-    url(r"^users/", views.users_list),
-    url(r"^test/", views.test),
-    url(r"^create_user", views.create_user)
+    url(r"^auth/", views.auth),
+    url(r"^change_pwd/", views.change_pwd),
+    url(r"^edit_user/", views.edit_user),
+    url(r"^search_user/", views.search_user),
+    url(r"^user_info/", views.user_info),
+    url(r"^role_permission", views.role_permission),
+    url(r"^edit_role", views.edit_role),
 ]

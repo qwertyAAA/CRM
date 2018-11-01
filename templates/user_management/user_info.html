@@ -1,0 +1,17 @@
+{% extends "MOM.html" %}
+{% block user_info %}
+    <div align="center">
+        <h2><strong>用户信息列表</strong></h2>
+    </div>
+    <div class="col-md-offset-1">
+        <div>
+            <a href="/user_management/edit_user/" class="btn btn-info" style="width: 100px;">新增用户</a>
+        </div>
+        <hr/>
+        <div>
+            这里是用户信息列表
+            <table class="table table-hover table-bordered">
+            </table>
+        </div>
+    </div>
+{% endblock %}
