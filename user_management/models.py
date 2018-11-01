@@ -22,7 +22,7 @@ class UserInfo(models.Model):
 # 角色表
 class Role(models.Model):
     id = models.AutoField(primary_key=True)
-    role_name = models.CharField(max_length=32, verbose_name="角色名")
+    role_name = models.CharField(max_length=32, unique=True, verbose_name="角色名")
     user = models.ManyToManyField(
         to=User,
         verbose_name="用户"
@@ -33,6 +33,7 @@ class Role(models.Model):
 class Permission(models.Model):
     id = models.AutoField(primary_key=True)
     permission_name = models.CharField(max_length=32)
+    status = models.BooleanField(default=False, verbose_name="授权状态")
     info = models.OneToOneField(to="PermissionInfo", to_field="id", verbose_name="权限信息")
     role = models.ManyToManyField(
         to="Role",
@@ -52,4 +53,3 @@ class PermissionInfo(models.Model):
     technology = models.BooleanField(default=False, verbose_name="技术部权限")
     sales = models.BooleanField(default=False, verbose_name="销售部权限")
     boss = models.BooleanField(default=False, verbose_name="boss权限")
-
