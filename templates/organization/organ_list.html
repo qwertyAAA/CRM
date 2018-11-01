@@ -1,0 +1,35 @@
+{% extends "MOM.html" %}
+
+{% block check_data %}
+    <h3 align="center">机构信息列表</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1">
+                <button type="button" class="btn btn-info">新增机构</button>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-info">联系人</button>
+            </div>
+            <div class="col-md-6"></div>
+            <div class="col-md-2">
+                <input type="text" placeholder="请输入关键字">
+            </div>
+            <div class="col-md-1">
+                <select>
+                    <option selected="selected">全部</option>
+                </select>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-info">查询</button>
+            </div>
+        </div>
+        <hr/>
+    <div class="row">
+        <table class="table table-bordered">
+            <tr>
+                <th>#</th>
+            </tr>
+        </table>
+    </div>
+    </div>
+{% endblock %}
