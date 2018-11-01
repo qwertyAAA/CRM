@@ -23,5 +23,5 @@ urlpatterns = [
     url(r"^$", mpv.index),
     url(r'^admin/', admin.site.urls),
     # url(r"^user_management/", include("user_management.urls")),
-    # url(r'^data_manage/',include('data_manage')),
+    url(r'^data_manage/',include(data_manage_urls)),
 ]
