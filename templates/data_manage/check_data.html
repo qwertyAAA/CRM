@@ -4,14 +4,31 @@
 {#<h1>nihao</h1>#}
 <table class="table table-bordered">
     <thead>
-            <h1>hello</h1>
+        <th>
+            <td><input type="checkbox"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </th>
     </thead>
     <tbody>
         {% for data in datalist %}
             <tr>
-                {% for da in data %}
-                    <td>{{ da }}</td>
-                {% endfor %}
+            {{ data.ver }}
+                <td><input type="checkbox"></td>
+                <td>{{ data.id }}</td>
+                <td>{{ data.data_name }}</td>
+                <td>{{ data.data }}</td>
+                <td>{{ data.user.username }}</td>
+                <td>{{ data.create_time }}</td>
+                <td>{{ data.update_time }}</td>
+                <td></td>
+                <td></td>
             </tr>
         {% endfor %}
 
