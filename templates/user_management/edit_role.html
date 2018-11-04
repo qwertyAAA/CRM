@@ -9,7 +9,7 @@
             <div class="form-group">
                 <label for="role_name" class="col-sm-2 control-label">管理员名：</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" id="role_name" name="role_name" placeholder="boss">
+                    <input type="text" class="form-control check_data" id="role_name" name="role_name" placeholder="boss">
                 </div>
             </div>
             <br/>
@@ -20,10 +20,41 @@
             <div class="form-group col-md-6">
                 这里是数据权限
             </div>
+            <br/>
+            <div class="form-group" id="error" style="display: none;">
+                <label for="error_msg" class="col-sm-2 control-label">错误信息：</label>
+                <div class="col-sm-5">
+                    <p id="error_msg" class="form-control-static" style="color: red;"></p>
+                </div>
+            </div>
+            <br/>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary btn-lg" style="width: 200px;" value="保存"/>
                 <input type="reset" class="btn btn-warning btn-lg" style="width: 200px;" value="取消"/>
             </div>
         </form>
     </div>
+    <script type="text/javascript">
+        $(function () {
+            $(".check_data").blur(function () {
+                $.ajax({
+                    url: "/user_management/check_data/",
+                    type: "post",
+                    data: {
+                        "key": $(this).attr("id"),
+                        "value": $(this).val(),
+                        "csrfmiddlewaretoken": "{{ csrf_token }}"
+                    },
+                    success: function (data) {
+                        if (data.status) {
+                            {#貌似form里的input的next取不到?扯nm的犊子#}
+                            {#alert($(this).next().text(data.msg));#}
+                            $("#error").show()
+                            $("#error_msg").text(data.msg)
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

@@ -6,10 +6,10 @@
     <div class="col-md-offset-1">
         <form class="form-inline">
             <div class="form-group">
-                <input type="text" class="form-control" name="value"/>
+                <input type="text" class="form-control" id="value"/>
             </div>
             <div class="form-group">
-                <select class="form-control" name="key">
+                <select class="form-control" id="key">
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -17,14 +17,38 @@
                     <option>5</option>
                 </select>
             </div>
-            <button type="button" class="btn btn-info">查询</button>
+            <button type="button" id="select_user" class="btn btn-info">查询</button>
         </form>
 
         <hr/>
         <div>
-            这里是管理员列表
-            <table class="table table-hover table-bordered">
+            这里是用户列表
+            <table class="table table-hover table-bordered" id="user_info">
             </table>
         </div>
     </div>
+        <script type="text/javascript">
+    $(function () {
+        $("#select_user").click(function () {
+            $.ajax({
+                url: "/user_management/select_user/",
+                type: "post",
+                data: {
+                    "key": $("#key").val(),
+                    "value": $("#value").val(),
+                    "csrfmiddlewaretoken": "{{ csrf_token }}"
+                },
+                success: function (data) {
+                    if(data.status)
+                    {
+                        {% with as  %}
+                        
+                        {% endwith %}
+                    }
+                }
+            });
+        });
+    });
+
+    </script>
 {% endblock %}

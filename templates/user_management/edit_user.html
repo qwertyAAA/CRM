@@ -16,28 +16,35 @@
             <div class="form-group">
                 <label for="username" class="col-sm-2 control-label">用户名：</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" id="username" name="username" placeholder="张三">
+                    <input type="text" class="form-control check_data" id="username" name="username" placeholder="张三">
                 </div>
             </div>
             <br/>
             <div class="form-group">
                 <label for="username" class="col-sm-2 control-label">员工号：</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" id="username" name="username" placeholder="123456">
+                    <input type="text" class="form-control check_data" id="username" name="username" placeholder="123456">
                 </div>
             </div>
             <br/>
             <div class="form-group">
                 <label for="password" class="col-sm-2 control-label">密码：</label>
                 <div class="col-sm-5">
-                    <input type="password" class="form-control" id="password" name="password">
+                    <input type="password" class="form-control check_data" id="password" name="password">
                 </div>
             </div>
             <br/>
             <div class="form-group">
                 <label for="confirm_password" class="col-sm-2 control-label">确认密码：</label>
                 <div class="col-sm-5">
-                    <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+                    <input type="password" class="form-control check_data" id="confirm_password" name="confirm_password">
+                </div>
+            </div>
+            <br/>
+            <div class="form-group" id="error" style="display: none;">
+                <label for="error_msg" class="col-sm-2 control-label">错误信息：</label>
+                <div class="col-sm-5">
+                    <p id="error_msg" class="form-control-static" style="color: red;"></p>
                 </div>
             </div>
             <br/>
@@ -47,4 +54,27 @@
             </div>
         </form>
     </div>
+    <script type="text/javascript">
+        $(function () {
+            $(".check_data").blur(function () {
+                $.ajax({
+                    url: "/user_management/check_data/",
+                    type: "post",
+                    data: {
+                        "key": $(this).attr("id"),
+                        "value": $(this).val(),
+                        "csrfmiddlewaretoken": "{{ csrf_token }}"
+                    },
+                    success: function (data) {
+                        if (data.status) {
+                            {#貌似form里的input的next取不到?扯nm的犊子#}
+                            {#alert($(this).next().text(data.msg));#}
+                            $("#error").show()
+                            $("#error_msg").text(data.msg)
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

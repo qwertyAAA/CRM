@@ -32,24 +32,20 @@ class Role(models.Model):
 # 权限表
 class Permission(models.Model):
     id = models.AutoField(primary_key=True)
-    permission_name = models.CharField(max_length=32)
-    status = models.BooleanField(default=False, verbose_name="授权状态")
-    info = models.OneToOneField(to="PermissionInfo", to_field="id", verbose_name="权限信息")
+    permission_name = models.CharField(max_length=32, verbose_name="权限名")
+    # 用户能看到的页面
+    user_permission = models.CharField(max_length=32, null=True, verbose_name="用户权限")
+    # 用户能看到的数据操作按钮
+    data_permission = models.CharField(max_length=32, null=True, verbose_name="数据权限")
+    action = models.BooleanField(default=False, verbose_name="是否授权")
+    group = models.ForeignKey(to="PermissionGroup", verbose_name="权限组")
+
+
+# 权限组表
+class PermissionGroup(models.Model):
+    id = models.AutoField(primary_key=True)
+    group_name = models.CharField(max_length=32, verbose_name="权限组名")
     role = models.ManyToManyField(
         to="Role",
         verbose_name="角色"
     )
-
-
-# 权限信息表
-class PermissionInfo(models.Model):
-    id = models.AutoField(primary_key=True)
-    update = models.BooleanField(default=False, verbose_name="更新权限")
-    delete = models.BooleanField(default=False, verbose_name="删除权限")
-    change = models.BooleanField(default=False, verbose_name="修改权限")
-    select = models.BooleanField(default=True, verbose_name="查看权限")
-    personnel = models.BooleanField(default=False, verbose_name="人事部权限")
-    finance = models.BooleanField(default=False, verbose_name="财务部权限")
-    technology = models.BooleanField(default=False, verbose_name="技术部权限")
-    sales = models.BooleanField(default=False, verbose_name="销售部权限")
-    boss = models.BooleanField(default=False, verbose_name="boss权限")
