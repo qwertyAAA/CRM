@@ -40,3 +40,16 @@ def edit_role(request):
     if request.method == "POST":
         pass
     return render(request, "user_management/edit_role.html")
+
+
+def check_data(request):
+    if request.is_ajax():
+        ret = {"status": True, "msg": "!!!!!!!!!!!!!!!!!!!!!!!"}
+        return JsonResponse(ret)
+
+
+def select_user(request):
+    if request.is_ajax():
+        ret = {"key": "我也不知道啊", "value": "我依然不知道啊"}
+        return JsonResponse(ret)
+
