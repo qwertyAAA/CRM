@@ -146,6 +146,12 @@
     </div>
     {#具体显示内容#}
     <div class="col-lg-8">
+        {# 主页模块 #}
+        {% block index %}
+        {% endblock %}
+        {% block login %}
+        {% endblock %}
+
         {# 资料库管理模块 #}
         {% block check_data%}
         {% endblock %}

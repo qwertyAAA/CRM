@@ -5,4 +5,8 @@ from django.http import JsonResponse
 
 
 def index(request):
-    return HttpResponse("this is main_page")
+    return render(request, "main_page/index.html")
+
+
+def login(request):
+    return render(request, "main_page/login.html")
