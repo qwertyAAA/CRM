@@ -10,42 +10,74 @@
             </div>
             <div class="form-group">
                 <select class="form-control" id="key">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option>用户编号</option>
+                    <option>用户名</option>
+                    <option>管理员分类</option>
+                    <option>员工姓名</option>
+                    <option>部门名称</option>
+                    <option>创建日期</option>
+                    <option>职位名称</option>
+                    <option>职务类别</option>
                 </select>
             </div>
             <button type="button" id="select_user" class="btn btn-info">查询</button>
+            <button type="button" id="test" class="btn btn-info">测试</button>
         </form>
 
         <hr/>
         <div>
-            这里是用户列表
             <table class="table table-hover table-bordered" id="user_info">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" id="check_all"></th>
+                    <th>用户编号</th>
+                    <th>用户名</th>
+                    <th>管理员分类</th>
+                    <th>员工姓名</th>
+                    <th>部门名称</th>
+                    <th>创建日期</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
             </table>
         </div>
     </div>
-        <script type="text/javascript">
-    $(function () {
-        $("#select_user").click(function () {
-            $.ajax({
-                url: "/user_management/select_user/",
-                type: "post",
-                data: {
-                    "key": $("#key").val(),
-                    "value": $("#value").val(),
-                    "csrfmiddlewaretoken": "{{ csrf_token }}"
-                },
-                success: function (data) {
-                    if(data.status)
-                    {
-                    }
+    <script type="text/javascript">
+        $(function () {
+            var flag = false
+            $("#check_all").click(function () {
+                if (flag)
+                {
+                    flag = false
+                    $(".check_item").attr("checked", flag)
                 }
+                else
+                {
+                    flag = true
+                    $(".check_item").attr("checked", flag)
+                }
+
+            })
+            $("#select_user").click(function () {
+                $.ajax({
+                    url: "/user_management/select_user/",
+                    type: "post",
+                    data: {
+                        "key": $("#key").val(),
+                        "value": $("#value").val(),
+                        "csrfmiddlewaretoken": "{{ csrf_token }}"
+                    },
+                    success: function (data) {
+                        if (data.status) {
+                            $("#user_info").append(data.html)
+                        }
+                        else {
+                            alert("您的输入有误！")
+                        }
+                    }
+                });
             });
         });
-    });
 
     </script>
 {% endblock %}

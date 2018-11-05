@@ -25,7 +25,7 @@ urlpatterns = [
     url(r"^role_permission", views.role_permission),
     url(r"^edit_role", views.edit_role),
     url(r"^check_data", views.check_data),
-    url(r"^select_user", views.select_user),
+    url(r"^select_user", views.search_user),
 
 
 ]
