@@ -34,7 +34,7 @@ class Permission(models.Model):
     id = models.AutoField(primary_key=True)
     permission_name = models.CharField(max_length=32, verbose_name="权限名")
     # 用户能看到的页面
-    user_permission = models.CharField(max_length=32, null=True, verbose_name="用户权限")
+    role_permission = models.CharField(max_length=32, null=True, verbose_name="角色权限")
     # 用户能看到的数据操作按钮
     data_permission = models.CharField(max_length=32, null=True, verbose_name="数据权限")
     action = models.BooleanField(default=False, verbose_name="是否授权")
