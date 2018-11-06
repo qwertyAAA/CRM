@@ -49,6 +49,9 @@
         </form>
     </div>
     <script type="text/javascript">
+        {% if create_user_status %}
+            alert("创建用户成功！")
+        {% endif %}
         $(function () {
             $(".check_data").blur(function () {
                 $.ajax({

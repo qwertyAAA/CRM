@@ -26,9 +26,9 @@ def edit_user(request):
         confirm_password = request.POST.get("confirm_password")
         if password == confirm_password:
             User.objects.create_user(username=username, password=password)
-        return redirect("/index/")
+        return render(request, "user_management/edit_user.html", {"create_user_status": True})
 
-    return render(request, "user_management/edit_user.html")
+    return render(request, "user_management/edit_user.html", {"create_user_status": False})
 
 
 def search_user(request):
