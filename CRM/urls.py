@@ -22,6 +22,7 @@ from CRM import settings
 
 urlpatterns = [
     url(r"^$", mpv.index),
+    url(r"^index/", mpv.index),
     url(r"^login/", mpv.login),
     url(r'^data_manage/', include(data_manage_urls)),
     url(r"^user_management/", include("user_management.urls")),
