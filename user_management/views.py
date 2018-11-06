@@ -21,7 +21,13 @@ def change_pwd(request):
 
 def edit_user(request):
     if request.method == "POST":
-        pass
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        confirm_password = request.POST.get("confirm_password")
+        if password == confirm_password:
+            User.objects.create_user(username=username, password=password)
+        return redirect("/index/")
+
     return render(request, "user_management/edit_user.html")
 
 
