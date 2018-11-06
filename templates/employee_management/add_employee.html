@@ -1,10 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "MOM.html" %}
+{% block add_employee %}
+    <div align="center">
+        <h2><strong>增加员工</strong></h2>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+{#    <br/>#}
+{#    <br/>#}
+{#    <br/>#}
+    <div class="col-md-offset-4">
 
-</body>
-</html>
+                <hr/>
+                <form action="" method="post" class="form-horizontal">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">员工姓名：</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="李刚">
+                        </div>
+                    </div>
+                <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">员工email：</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="username" name="email" placeholder="12356@168.com">
+                        </div>
+                    </div>
+                <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">员工密码：</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="username" name="password" placeholder="123456">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">员工薪资：</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="username" name="staff_salary" placeholder="15000">
+                        </div>
+                    </div>
+                    <br/>
+{#                    <div class="form-group">#}
+{#                        <label for="username" class="col-sm-2 control-label">员工工号：</label>#}
+{#                        <div class="col-sm-5">#}
+{#                            <input type="text" class="form-control" id="username" name="id" placeholder="101">#}
+{#                        </div>#}
+{#                    </div>#}
+                    <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">员工部门：</label>
+                        <div class="col-sm-5">
+
+                            <input type="text" class="form-control" id="username" name="department_id_list" placeholder="市场部">
+
+                            <select name="department_id_list" id=""  multiple>
+                                {% for department in department_list %}
+
+                                  <option value="{{ department.pk }}">{{ department.department_name }}</option>
+
+                                {% endfor %}
+                              </select>
+                        </div>
+                    </div>
+                    <br/>
+
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary btn-lg" style="width: 200px;" value="保存"/>
+                        <input type="reset" class="btn btn-warning btn-lg" style="width: 200px;" value="取消"/>
+                    </div>
+                </form>
+    </div>
+{% endblock %}
