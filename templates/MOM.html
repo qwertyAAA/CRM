@@ -85,9 +85,9 @@
                                                                                       aria-hidden="true"></i>&nbsp;&nbsp;员工管理</a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="dropdown-header"></li>
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
+                            <li><a href="/employee_management/employee_info/">员工资料展示</a></li>
+                            <li><a href="/employee_management/edit_employee/">编辑员工信息</a></li>
+                            <li><a href="/employee_management/add_employee/"> 创建员工</a></li>
                             <li><a href="#">Separated link</a></li>
                             <li><a href="#">One more separated link</a></li>
                         </ul>
@@ -179,7 +179,13 @@
         {% endblock %}
 
         {# 员工管理模块 #}
-        {# to do... #}
+        {% block employee_info%}
+        {% endblock %}
+        {% block edit_employee %}
+        {% endblock %}
+        {% block add_employee %}
+        {% endblock %}
+
 
         {# 客户管理模块 #}
         {# to do... #}

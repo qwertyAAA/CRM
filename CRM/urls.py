@@ -19,8 +19,9 @@ from data_manage import urls as data_manage_urls
 from employee_management import urls as employee_management_urls
 from django.views.static import serve
 from CRM import settings
-
+from django.contrib import admin
 urlpatterns = [
+   url(r'^admin/', admin.site.urls),
     url(r"^$", mpv.index),
     url(r"^index/", mpv.index),
     url(r"^login/", mpv.login),

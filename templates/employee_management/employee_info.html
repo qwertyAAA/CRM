@@ -1,0 +1,54 @@
+{% extends "MOM.html" %}
+{% block employee_info %}
+    <div align="center">
+        <h2><strong>员工信息列表</strong></h2>
+    </div>
+    <div class="col-md-offset-1">
+        <div>
+            <a href="/employee_management/add_employee/" class="btn btn-primary" style="width: 100px;">新增员工</a>
+        </div>
+        <hr/>
+        <div>
+            员工户信息列表
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>员工ID</th>
+                    <th>员工薪资</th>
+                    <th>员工状态</th>
+                     <th>员工部门</th>
+                    <th>操作</th>
+                </tr>
+                <tbody>
+                {% for staff in staff_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ staff.id}}</td>
+                        <td>{{ staff.staff_salary }}</td>
+                        <td>{{ staff.staff_state }}</td>
+                        <td>
+                            {% for deparment in staff.department.all %}
+                            {{ deparment.department_name }}
+                            {% endfor %}
+                        </td>
+                        <td>
+
+                                <a href="/employee_management/delete_employee/{{ staff.pk }}" class="btn btn-danger">删除</a>
+
+
+                                <a href="/employee_management/edit_employee/{{ staff.pk }}" class="btn btn-warning">编辑</a>
+
+
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+                </thead>
+
+            </table>
+        </div>
+    </div>
+{% endblock %}
