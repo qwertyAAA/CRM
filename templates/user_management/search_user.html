@@ -46,17 +46,14 @@
         $(function () {
             var flag = false
             $("#check_all").click(function () {
-                if (flag)
-                {
+                if (flag) {
                     flag = false
                     $(".check_item").attr("checked", flag)
                 }
-                else
-                {
+                else {
                     flag = true
                     $(".check_item").attr("checked", flag)
                 }
-
             })
             $("#select_user").click(function () {
                 $.ajax({

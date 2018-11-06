@@ -13,17 +13,11 @@
     <div class="col-md-offset-4">
         <hr/>
         <form action="" method="post" class="form-horizontal">
+            {% csrf_token %}
             <div class="form-group">
                 <label for="username" class="col-sm-2 control-label">用户名：</label>
                 <div class="col-sm-5">
                     <input type="text" class="form-control check_data" id="username" name="username" placeholder="张三">
-                </div>
-            </div>
-            <br/>
-            <div class="form-group">
-                <label for="username" class="col-sm-2 control-label">员工号：</label>
-                <div class="col-sm-5">
-                    <input type="text" class="form-control check_data" id="username" name="username" placeholder="123456">
                 </div>
             </div>
             <br/>
