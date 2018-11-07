@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^data_manage/',include(data_manage_urls)),
     url(r"^user_management/", include("user_management.urls")),
     url(r"^employee_management/", include(employee_management_urls)),
+    url(r"^organization/", include("organization.urls")),
 
 ]
