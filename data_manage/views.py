@@ -33,14 +33,26 @@ def add(request):
         datafile=request.FILES.get('datafile')
         # print('datafile:',datafile)
         newdata=models.Data.objects.create(data_name=dataname,category=category,comment=datafile,user=datauser)
-        return redirect('/data_manage/add/')
+        return redirect('/data_manage/check/')
     return render(request,'data_manage/add_data.html',{'category':categorylist})
 
 def delete(requset):
-    dataid=requset.GET.get('id')
-    data=models.Data.objects.filter(id=dataid)[0]
-    data.delete()
-    return redirect('/data_manage/check/')
+    if requset.method=='GET':
+        dataid=requset.GET.get('id')
+        data=models.Data.objects.filter(id=dataid)[0]
+        data.delete()
+        return redirect('/data_manage/check/')
+    else:
+        idlist=requset.POST.getlist('idlist')
+        try:
+            idlist.remove('')
+        except Exception:
+            print('该列表中无空字符串')
+        print(idlist)
+        for id in idlist:
+            data = models.Data.objects.filter(id=int(id))[0]
+            data.delete()
+        return JsonResponse({'test':1})
 
 def edit(requset):
     if requset.method=='GET':
@@ -48,8 +60,11 @@ def edit(requset):
         data=models.Data.objects.get(id=dataid)
         categorylist = models.Category.objects.all()
         #文件后缀
-        index=data.comment.name.rindex('.')
-        filesuffix=data.comment.name[index:]
+        if data.comment:
+            index=data.comment.name.rindex('.')
+            filesuffix=data.comment.name[index:]
+        else:
+            filesuffix='文件为空'
         return render(requset, 'data_manage/edit.html',
                       {
                           'dataid':data.id,
