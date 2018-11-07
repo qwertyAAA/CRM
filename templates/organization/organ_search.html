@@ -1,0 +1,72 @@
+{% extends "MOM.html" %}
+{% block css %}
+    <style>
+        th {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+{% block organ %}
+    <h3 align="center">搜索到{{ organ_list | length }}条相关机构信息</h3>
+    <div class="container">
+        <div class="row">
+            <form action="/organization/search/" method="post" name="org_search">
+                {% csrf_token %}
+                <div class="col-md-2">
+                    <input type="text" name="search_key" class="form-control" placeholder="请输入关键字">
+                </div>
+                <div class="col-md-1">
+                    <select id="search_header" name="header">
+                        <option value="机构名称">机构名称</option>
+                        <option value="省份">省份</option>
+                        <option value="城市">城市</option>
+                        <option value="行业类别">行业类别</option>
+                        <option value="分配情况">分配情况</option>
+                        <option value="机构类型">机构类型</option>
+                        <option value="跟进状态">跟进状态</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-primary btn-lg">查询</button>
+                </div>
+            </form>
+        </div>
+        <hr/>
+        {% if organ_list %}
+            <div class="row">
+                <table class="table table-bordered">
+                    <tr style="text-align: center">
+                        <th><input type="checkbox"></th>
+                        <th>编号</th>
+                        <th colspan="2">机构名称</th>
+                        <th>行业类别</th>
+                        <th>省份</th>
+                        <th>经办人</th>
+                        <th>联系人</th>
+                        <th>审核状态</th>
+                        <th>操作</th>
+                    </tr>
+                    {% for organ in organ_list %}
+                        <tr style="text-align: center">
+                            <td><input type="checkbox"></td>
+                            <td>{{ forloop.counter }}</td>
+                            <td colspan="2">{{ organ.org_name }}</td>
+                            <td>{{ organ.industry }}</td>
+                            <td>{{ organ.province }}</td>
+                            <td>{{ organ.agent }}</td>
+                            <td>{{ organ.linkman }}</td>
+                            <td>{{ organ.check_status }}</td>
+                            <td>
+                                <a href="/organization/edit/{{ organ.id }}/">编辑</a>
+                                <a href="/organization/delete/{{ organ.id }}/">删除</a>
+                                <a href="/organization/detail/{{ organ.id }}/">查看</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% else %}
+            <h3></h3>
+        {% endif %}
+    </div>
+{% endblock %}

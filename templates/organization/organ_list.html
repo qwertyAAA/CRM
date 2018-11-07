@@ -1,35 +1,83 @@
 {% extends "MOM.html" %}
-
-{% block check_data %}
-    <h3 align="center">机构信息列表</h3>
+{% block css %}
+    <style>
+        th {
+            text-align: center;
+        }
+        #search_header{
+            height: 32px;
+        }
+    </style>
+{% endblock %}
+{% block organ %}
+    <h3 align="center">机构信息列表</h3><br/>
     <div class="container">
         <div class="row">
             <div class="col-md-1">
-                <button type="button" class="btn btn-info">新增机构</button>
+                <a href="/organization/add/" class="btn btn-lg btn-primary" role="button">新增机构</a>
             </div>
+            <div class="col-md-1"></div>
             <div class="col-md-1">
-                <button type="button" class="btn btn-info">联系人</button>
+                <a href="/organization/linkman_list/" class="btn btn-lg btn-primary" role="button">联系人</a>
             </div>
-            <div class="col-md-6"></div>
-            <div class="col-md-2">
-                <input type="text" placeholder="请输入关键字">
-            </div>
-            <div class="col-md-1">
-                <select>
-                    <option selected="selected">全部</option>
-                </select>
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-info">查询</button>
-            </div>
+            <div class="col-md-5"></div>
+            <form action="/organization/search/" method="post" name="org_search">
+                {% csrf_token %}
+                <div class="col-md-2">
+                    <input type="text" name="search_key" class="form-control" placeholder="请输入关键字">
+                </div>
+                <div class="col-md-1">
+                    <select id="search_header" name="header">
+{#                        {% for header in header_list %}#}
+{#                            <option value="{{ header }}">{{ header }}</option>#}
+{#                        {% endfor %}#}
+                        <option value="机构名称">机构名称</option>
+                        <option value="省份">省份</option>
+                        <option value="城市">城市</option>
+                        <option value="行业类别">行业类别</option>
+                        <option value="分配情况">分配情况</option>
+                        <option value="机构类型">机构类型</option>
+                        <option value="跟进状态">跟进状态</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-primary btn-lg">查询</button>
+                </div>
+            </form>
         </div>
         <hr/>
-    <div class="row">
-        <table class="table table-bordered">
-            <tr>
-                <th>#</th>
-            </tr>
-        </table>
-    </div>
+        <div class="row">
+            <table class="table table-bordered">
+                <tr style="text-align: center">
+                    <th><input type="checkbox" name="select_org"></th>
+                    <th>编号</th>
+                    <th colspan="2">{{ header_list.1 }}</th>
+                    <th>{{ header_list.10 }}</th>
+                    <th>{{ header_list.6 }}</th>
+                    <th>{{ header_list.12 }}</th>
+                    <th>联系人</th>
+                    <th>{{ header_list.16 }}</th>
+                    <th>操作</th>
+                </tr>
+                {% for organ in organ_list %}
+                    <tr style="text-align: center">
+                        <td><input type="checkbox" name="'select_'+'{{ organ.id }}'"></td>
+                        <td>{{ forloop.counter }}</td>
+                        <td colspan="2">{{ organ.org_name }}</td>
+                        <td>{{ organ.industry }}</td>
+                        <td>{{ organ.province }}</td>
+                        <td>{{ organ.agent }}</td>
+                        <td>{{ organ.linkman }}</td>
+                        <td>{{ organ.check_status }}</td>
+                        <td>
+                            <a href="/organization/edit/{{ organ.id }}/">编辑</a>
+                            <a href="/organization/delete/{{ organ.id }}/">删除</a>
+                            <a href="/organization/detail/{{ organ.id }}/">查看</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </div>
     </div>
 {% endblock %}

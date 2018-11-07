@@ -1,0 +1,75 @@
+{% extends "MOM.html" %}
+{% block css %}
+    <style>
+        th {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+{% block organ %}
+    <h3 align="center">搜索到{{ linkman_list | length }}条相关机构信息</h3>
+    <div class="container">
+        <div class="row">
+            <form action="/organization/linkman_search/" method="post" name="org_search">
+                {% csrf_token %}
+                <div class="col-md-2">
+                    <input type="text" name="search_key" placeholder="请输入关键字">
+                </div>
+                <div class="col-md-1">
+                    <select id="search_header" name="header">
+                        <option value="机构名称">机构名称</option>
+                        <option value="姓名">姓名</option>
+                        <option value="性别">性别</option>
+                        <option value="重要等级">重要等级</option>
+                        <option value="跟进状态">跟进状态</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-primary btn-lg">查询</button>
+                </div>
+            </form>
+        </div>
+        <hr/>
+    {% if linkman_list %}
+        <div class="row">
+            <table class="table table-bordered">
+                <tr style="text-align: center">
+                    <th><input type="checkbox"></th>
+                    <th>编号</th>
+                    <th colspan="2">机构名称</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>职务</th>
+                    <th>手机</th>
+                    <th>邮箱</th>
+                    <th>重要等级</th>
+                    <th>跟进状态</th>
+                    <th>操作</th>
+                </tr>
+                {% for linkman in linkman_list %}
+                    <tr style="text-align: center">
+                        <th><input type="checkbox"></th>
+                        <th>{{ forloop.counter }}</th>
+                        <th colspan="2">{{ linkman.organ.org_name }}</th>
+                        <th>{{ linkman.name }}</th>
+                        <th>{{ linkman.gender }}</th>
+                        <th>{{ linkman.duty }}</th>
+                        <th>{{ linkman.phone }}</th>
+                        <th>{{ linkman.email }}</th>
+                        <th>{{ linkman.link_important }}</th>
+                        <th>{{ linkman.following }}</th>
+                        <th>
+                            <a href="/organization/linkman_edit/{{ linkman.id }}/">编辑</a>
+                            <a href="/organization/linkman_delete/{{ linkman.id }}/">删除</a>
+                            <a href="/organization/linkman_detail/{{ linkman.id }}/">查看</a>
+                        </th>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    {% else %}
+        <h3></h3>
+    {% endif %}
+    </div>
+{% endblock %}

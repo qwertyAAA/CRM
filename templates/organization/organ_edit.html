@@ -1,0 +1,281 @@
+{% extends "MOM.html" %}
+{% block css %}
+    <style>
+        .must {
+            color: red;
+            font-size: medium;
+        }
+
+        div.row {
+            margin-top: 6px;
+        }
+
+        .beizhu {
+            width: 600px;
+            height: 100px;
+        }
+
+        .fenlei {
+            font-size: large;
+            text-align: left;
+        }
+
+        .bitian {
+            display: block;
+            text-align: right;
+        }
+
+        div > span {
+            text-align: right;
+        }
+    </style>
+{% endblock %}
+{% block organ %}
+    <h3 align="center">编辑机构信息</h3><br/><br/>
+    <span class="fenlei">基本信息：</span><span class="bitian">注：带有“ * ”必填项</span>
+    <hr/>
+    <form action="/organization/edit/{{ organ_obj.id }}/" method="post">
+        {% csrf_token %}
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>机构名称：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="org_name" id="org_name" size="70">
+                    <button type="button" class="btn btn-info">查询</button>
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>机构地址：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="org_address" id="org_address" size="70">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>手机：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="mobile" id="mobile" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>电话：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="tel" id="tel" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>国家：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="country" id="country" size="30">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>省份：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="province" id="province" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>城市：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="city" id="city" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>邮编：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="postcode" id="postcode" size="30">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>网站：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="site" id="site" size="70">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>行业类别：</span>
+                </div>
+                <div class="col-xs-10">
+                    <select name="industry">
+                        <option value="党政军企">党政军企</option>
+                        <option value="高职高专">高职高专</option>
+                        <option value="高等院校">高等院校</option>
+                    </select>
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>区域等级：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="area_level" id="area_level" size="20">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+        </div>
+        <br/><br/>
+        <span class="fenlei">其他信息：</span>
+        <hr/>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <span>经办人：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="agent" id="agent" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>采购级别：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="pur_level" id="pur_level" size="20">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>采购途径：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="pur_way" id="pur_way" size="20">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>分配情况：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="radio" name="distribution" value="1">已分配
+                    <input type="radio" name="distribution" value="0">未分配
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>审核状态：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="check_status" id="check_status" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>机构类型：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="org_category" id="org_category" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>跟进状态：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="follow_status" id="follow_status" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>备注信息：</span>
+                </div>
+                <div class="col-md-10">
+                    <textarea class="beizhu" name="remark" id="remark"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>标签：</span>
+                </div>
+                <div class="col-md-10">
+                    <input type="text" name="tag" id="tag" size="30">
+                </div>
+            </div>
+            <br/><br/>
+            <div class="row">
+                <div class="col-md-2 col-md-offset-4">
+                    <button type="submit" class="btn btn-primary btn-lg active">确定编辑</button>
+                </div>
+                <div class="col-md-2">
+                    <a href="/organization/" class="btn btn-default btn-lg active" role="button">取消</a>
+                </div>
+            </div>
+            <br/><br/>
+        </div>
+    </form>
+
+    <script>
+        $(function () {
+            $.ajax({
+                url: "/organization/detail/" + "{{ organ_obj.id }}/",
+                success: function (data) {
+                    $("#org_name").val(data[0].org_name);
+                    $("#org_address").val(data[0].org_address);
+                    $("#mobile").val(data[0].mobile);
+                    $("#tel").val(data[0].tel);
+                    $("#country").val(data[0].country);
+                    $("#province").val(data[0].province);
+                    $("#city").val(data[0].city);
+                    $("#postcode").val(data[0].postcode);
+                    $("#site").val(data[0].site);
+                    $("#industry").val(data[0].industry);
+                    //var industry_val = data[0].industry;
+                    //alert(industry_val);
+                    //$("#industry").find(option[text=industry_val]).attr("selected",true)
+                    //$("option[name='industry'][value=industry_val]").attr("selected", true)
+                    $("#area_level").val(data[0].area_level);
+                    $("#agent").val(data[0].agent);
+                    $("#pur_level").val(data[0].pur_level);
+                    $("#pur_way").val(data[0].pur_way);
+                    //$("#distribution").val(data[0].distribution);
+                    if (data[0].distribution) {
+                        $("input[name='distribution'][value='1']").attr("checked", true);
+                    } else {
+                        $("input[name='distribution'][value='0']").attr("checked", true);
+                    }
+                    $("#check_status").val(data[0].check_status);
+                    $("#org_category").val(data[0].org_category);
+                    $("#follow_status").val(data[0].follow_status);
+                    $("#remark").val(data[0].remark);
+                    $("#tag").val(data[0].tag);
+                }
+
+
+            });
+
+
+        })
+
+
+    </script>
+{% endblock %}

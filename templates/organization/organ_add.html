@@ -1,0 +1,268 @@
+{% extends "MOM.html" %}
+{% block css %}
+    <style>
+        .must {
+            color: red;
+            font-size: medium;
+        }
+
+        div.row {
+            margin-top: 6px;
+        }
+
+        .beizhu {
+            width: 600px;
+            height: 100px;
+        }
+
+        .fenlei {
+            font-size: large;
+            text-align: left;
+        }
+
+        .bitian {
+            display: block;
+            text-align: right;
+        }
+
+        div > span {
+            text-align: right;
+        }
+        #massage {
+            color: red;
+        }
+    </style>
+{% endblock %}
+{% block organ %}
+    <h3 align="center">创建机构信息</h3><br/><br/>
+    <span class="fenlei">基本信息：</span><span class="bitian">注：带有“ * ”必填项</span>
+    <hr/>
+    <form action="/organization/add/" method="post" name="organ_add">
+        {% csrf_token %}
+        <div class="container">
+
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>机构名称：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" id="organ_name" name="org_name" size="70">
+                    <button type="button" id="org_name_select" class="btn btn-info">查询</button>
+                    <span id="massage"></span>
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>机构地址：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="org_address" size="70">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>手机：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="mobile" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>电话：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="tel" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>国家：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="country" size="30">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>省份：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="province" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>城市：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="city" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>邮编：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="postcode" size="30">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>网站：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="site" size="70">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>行业类别：</span>
+                </div>
+                <div class="col-xs-10">
+                    <select name="industry">
+                        <option value="党政军企">党政军企</option>
+                        <option value="高职高专">高职高专</option>
+                        <option value="高等院校">高等院校</option>
+                    </select>
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>区域等级：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="area_level" size="20">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+
+        </div>
+        <br/><br/>
+        <span class="fenlei">其他信息：</span>
+        <hr/>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <span>经办人：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="agent" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>采购级别：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="pur_level" size="20">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>采购途径：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="pur_way" size="20">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>分配情况：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="radio" name="distribution" value="1">已分配
+                    <input type="radio" name="distribution" value="0">未分配
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>审核状态：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="check_status" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>机构类型：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="org_category" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>跟进状态：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" name="follow_status" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>备注信息：</span>
+                </div>
+                <div class="col-md-10">
+                    <textarea class="beizhu" name="remark"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>标签：</span>
+                </div>
+                <div class="col-md-10">
+                    <input type="text" name="tag" size="30">
+                </div>
+            </div>
+            <br/><br/>
+            <div class="row">
+                <div class="col-md-2 col-md-offset-4">
+                    <button type="submit" class="btn btn-primary btn-lg active">确定</button>
+                </div>
+                <div class="col-md-2">
+                    <a href="/organization/" class="btn btn-default btn-lg active" role="button">取消</a>
+                </div>
+            </div>
+            <br/><br/>
+        </div>
+    </form>
+
+    <script>
+        $(function () {
+            $("#org_name_select").click(function () {
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+                });
+                $.post(
+                    "/organization/org_name_check2/",
+                    {
+                        "organ_name": $("#organ_name").val()
+                    },
+                    function (data) {
+                        $("#massage").text(data["message"]);
+                        $("#organ_name").focus();
+                    }
+                );
+
+
+            });
+
+
+        })
+
+
+    </script>
+{% endblock %}
