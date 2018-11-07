@@ -51,6 +51,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 用户验证中间件
+    # "CheckLoginMiddleWare.CheckLogin",
+    # 权限管理中间件
+    # "AuthMiddleWare.CheckAuth"
 ]
 
 ROOT_URLCONF = 'CRM.urls'
