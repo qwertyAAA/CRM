@@ -1,6 +1,6 @@
 {% extends "MOM.html" %}
 {% block edit_user %}
-            <div align="center">
+    <div align="center">
         <h2><strong>编辑用户</strong></h2>
     </div>
     <br/>
@@ -24,14 +24,15 @@
             <div class="form-group">
                 <label for="password" class="col-sm-2 control-label">密码：</label>
                 <div class="col-sm-5">
-                    <input type="password" class="form-control check_data" id="password" name="password">
+                    <input type="password" class="form-control" id="password" name="password">
                 </div>
             </div>
             <br/>
             <div class="form-group">
                 <label for="confirm_password" class="col-sm-2 control-label">确认密码：</label>
                 <div class="col-sm-5">
-                    <input type="password" class="form-control check_data" id="confirm_password" name="confirm_password">
+                    <input type="password" class="form-control check_data" id="confirm_password"
+                           name="confirm_password">
                 </div>
             </div>
             <br/>
@@ -43,8 +44,10 @@
             </div>
             <br/>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary btn-lg" style="width: 200px;" value="保存"/>
-                <input type="reset" class="btn btn-warning btn-lg" style="width: 200px;" value="取消"/>
+                <input type="submit" class="btn btn-primary" disabled="disabled" id="save"
+                       style="width: 200px;" value="保存"/>
+                <input type="reset" class="btn btn-warning"
+                       style="width: 200px;" value="取消"/>
             </div>
         </form>
     </div>
@@ -53,14 +56,26 @@
             alert("创建用户成功！")
         {% endif %}
         $(function () {
+            var flag = false
+            $(".check_data").focus(function () {
+                $("#error").hide()
+            })
             $(".check_data").blur(function () {
                 $.ajax({
-                    url: "/user_management/check_data/",
+                    async: true,
+                    url: "/user_management/edit_user/",
                     type: "post",
                     data: {
-                        "key": $(this).attr("id"),
-                        "value": $(this).val(),
+                        "username": $("#username").val(),
+                        "password": $("#password").val(),
+                        "confirm_password": $("#confirm_password").val(),
                         "csrfmiddlewaretoken": "{{ csrf_token }}"
+                    },
+                    complete: function () {
+                        if (flag)
+                            $("#save").removeAttr("disabled")
+                        else
+                            $("#save").attr("disabled", "disabled")
                     },
                     success: function (data) {
                         if (data.status) {
@@ -68,7 +83,10 @@
                             {#alert($(this).next().text(data.msg));#}
                             $("#error").show()
                             $("#error_msg").text(data.msg)
+                            flag = false
                         }
+                        else
+                            flag = true
                     }
                 });
             });

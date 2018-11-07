@@ -10,23 +10,17 @@
             </div>
             <div class="form-group">
                 <select class="form-control" id="key">
-                    <option>用户编号</option>
-                    <option>用户名</option>
-                    <option>管理员分类</option>
-                    <option>员工姓名</option>
-                    <option>部门名称</option>
-                    <option>创建日期</option>
-                    <option>职位名称</option>
-                    <option>职务类别</option>
+                    {% for item in keys%}
+                        <option value="{{ item.0 }}">{{ item.1 }}</option>
+                    {% endfor %}
                 </select>
             </div>
             <button type="button" id="select_user" class="btn btn-info">查询</button>
-            <button type="button" id="test" class="btn btn-info">测试</button>
         </form>
 
         <hr/>
         <div>
-            <table class="table table-hover table-bordered" id="user_info">
+            <table class="table table-hover table-bordered">
                 <thead>
                 <tr>
                     <th><input type="checkbox" id="check_all"></th>
@@ -39,6 +33,7 @@
                     <th>操作</th>
                 </tr>
                 </thead>
+                <tbody id="user_info"></tbody>
             </table>
         </div>
     </div>
@@ -56,6 +51,7 @@
                 }
             })
             $("#select_user").click(function () {
+                $("#user_info").html("")
                 $.ajax({
                     url: "/user_management/select_user/",
                     type: "post",
@@ -69,7 +65,7 @@
                             $("#user_info").append(data.html)
                         }
                         else {
-                            alert("您的输入有误！")
+                            alert("请输入内容！")
                         }
                     }
                 });
