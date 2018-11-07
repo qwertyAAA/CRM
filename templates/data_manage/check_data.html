@@ -1,40 +1,47 @@
 {% extends 'MOM.html' %}
 
 {% block check_data %}
-{#<h1>nihao</h1>#}
 <div class="row" style="margin-bottom: 3px">
     <form action="/data_manage/add/" method="get">
         {% csrf_token %}
-        <button class="btn btn-primary">新增文件</button>
+        <button type="submit" class="btn btn-primary">新增文件</button>
     </form>
+        <button type="button" id="deletebt" class="btn btn-primary">删除文件</button>
+
 </div>
 
 <div class="row">
     <table class="table table-bordered">
         <thead>
-                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox" id="all" name="checkbox"></td>
                     <td>{{ headname.0 }}</td>
                     <td>{{ headname.1 }}</td>
                     <td>{{ headname.6 }}</td>
                     <td>{{ headname.5 }}</td>
                     <td>{{ headname.3 }}</td>
                     <td>{{ headname.4 }}</td>
+                    <td>操作</td>
         </thead>
         <tbody>
             {% for data in datalist %}
                 <tr>
-                {{ data.ver }}
-                    <td><input type="checkbox"></td>
-                    <td>{{ data.id }}</td>
+                    <td><input type="checkbox" class="one" dataid="{{ data.id }}"></td>
+                    <td class="dataid">{{ data.id }}</td>
                     <td>{{ data.data_name }}</td>
                     <td>{{ data.category }}</td>
                     <td>{{ data.user.username }}</td>
                     <td>{{ data.create_time }}</td>
                     <td>{{ data.update_time }}</td>
+                    <td>
+                        <a href="/data_manage/edit/?id={{ data.id }}">编辑</a>
+                        <a href="/data_manage/delete/?id={{ data.id }}">删除</a>
+                    </td>
                 </tr>
             {% endfor %}
 
         </tbody>
     </table>
 </div>
+
+    <script src="/static/bootstrap/js/check_data_op.js"></script>
 {% endblock %}
