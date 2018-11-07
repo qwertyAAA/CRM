@@ -1,0 +1,17 @@
+{% extends "MOM.html" %}
+{% block role_permission %}
+    <div align="center">
+        <h2><strong>管理员信息列表</strong></h2>
+    </div>
+    <div class="col-md-offset-1">
+        <div>
+            <a href="/user_management/edit_role/" class="btn btn-info" style="width: 100px;">新增管理员</a>
+        </div>
+        <hr/>
+        <div>
+            这里是管理员列表
+            <table class="table table-hover table-bordered">
+            </table>
+        </div>
+    </div>
+{% endblock %}

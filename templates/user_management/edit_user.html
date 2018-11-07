@@ -1,0 +1,50 @@
+{% extends "MOM.html" %}
+{% block edit_user %}
+            <div align="center">
+        <h2><strong>编辑用户</strong></h2>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <div class="col-md-offset-4">
+        <hr/>
+        <form action="" method="post" class="form-horizontal">
+            <div class="form-group">
+                <label for="username" class="col-sm-2 control-label">用户名：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="张三">
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label for="username" class="col-sm-2 control-label">员工号：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="123456">
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">密码：</label>
+                <div class="col-sm-5">
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label for="confirm_password" class="col-sm-2 control-label">确认密码：</label>
+                <div class="col-sm-5">
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary btn-lg" style="width: 200px;" value="保存"/>
+                <input type="reset" class="btn btn-warning btn-lg" style="width: 200px;" value="取消"/>
+            </div>
+        </form>
+    </div>
+{% endblock %}
