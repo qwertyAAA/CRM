@@ -44,21 +44,4 @@
 </div>
 
     <script src="/static/bootstrap/js/check_data_op.js"></script>
-    <script>
-    console.log($('.dataid').text());
-        $('#deletebt').click(function () {
-            var checklist=$('.dataid');
-            var idlist=[];
-            if ($('#all').is(':checked'))
-            {
-                console.log(checklist);
-                for (i = 0; i <= checklist.length; i++)
-                {
-                    idlist.push(checklist[i])
-                }
-            }
-            console.log(idlist);
-            {#checklist=$('input:checked')#}
-        })
-    </script>
 {% endblock %}
