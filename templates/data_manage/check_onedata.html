@@ -1,0 +1,59 @@
+{% extends 'MOM.html' %}
+{% block edit_data %}
+    <style>
+        #dataname{
+            width: 500px;
+            margin-right: 5px;
+        }
+        .addpage{
+            width: 300px;
+            margin-right: 5px;
+        }
+        {#.suffix{#}
+        {#    display: inline-block;#}
+        {# }#}
+        .row{
+            margin-bottom: 20px;
+        }
+        img{
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+    <form action="/data_manage/data/{{ data.id }}/" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <span>基本资料信息</span>
+            <hr>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="dataname">资料名称</label>
+                <input type="text" class="form-control suffix" id="dataname"  value="{{ data.data_name }}" disabled='disabled'>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="ddatacategory">资料分类</label>
+                <input type="text" class="form-control suffix addpage" id="ddatacategory"  value="{{ data.category.title }}" disabled='disabled'>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="datafile">文件名称</label>
+                <input type="text" id="datafile" class="form-control addpage suffix" disabled="disabled" value="{{ filename }}">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="datauser">发布者</label>
+                <input type="text" class="form-control addpage suffix" id="datauser" disabled="disabled" value="{{ data.user.username }}">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">下载文件</button>
+    </form>
+{% endblock %}

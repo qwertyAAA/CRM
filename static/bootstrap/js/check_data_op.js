@@ -42,4 +42,4 @@
                     location.href='/data_manage/check/'
                 }
             })
-        })
+        });
