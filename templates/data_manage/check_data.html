@@ -1,12 +1,37 @@
 {% extends 'MOM.html' %}
 
 {% block check_data %}
+<div class="row">
+    <h3 style="text-align: center;font-weight: bolder">文件列表</h3>
+    <hr>
+</div>
+
 <div class="row" style="margin-bottom: 3px">
-    <form action="/data_manage/add/" method="get">
+    <div class="col-lg-1">
+        <form action="/data_manage/add/" method="get">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">新增文件</button>
+        </form>
+    </div>
+    <div class="col-lg-1">
+        <button type="button" id="deletebt" class="btn btn-danger">删除文件</button>
+    </div>
+
+    <form action="" method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary">新增文件</button>
+        <div class="form-group col-lg-3 col-lg-offset-6">
+            <label class="sr-only" for="exampleInputEmail3">搜索框</label>
+            {% if keyword == '' %}
+                <input type="text" class="form-control" name="keyword" id="exampleInputEmail3" placeholder="请根据编号或者资料名查找">
+            {% else %}
+                <input type="text" class="form-control" name="keyword" id="exampleInputEmail3" placeholder="请根据编号或者资料名查找" value="{{ keyword }}">
+            {% endif %}
+        </div>
+        <div class="col-lg-1">
+            <button type="submit" class="btn btn-primary">查询</button>
+        </div>
     </form>
-        <button type="button" id="deletebt" class="btn btn-primary">删除文件</button>
+
 
 </div>
 
@@ -33,14 +58,18 @@
                     <td>{{ data.create_time }}</td>
                     <td>{{ data.update_time }}</td>
                     <td>
-                        <a href="/data_manage/edit/?id={{ data.id }}">编辑</a>
+                        <a href="/data_manage/edit/{{ data.id }}/">编辑</a>
                         <a href="/data_manage/delete/?id={{ data.id }}">删除</a>
+                        <a href="/data_manage/data/{{ data.id }}/">查看</a>
                     </td>
                 </tr>
             {% endfor %}
 
         </tbody>
     </table>
+</div>
+<div class="row">
+    {% include 'data_manage/checkdata_page.html' %}
 </div>
 
     <script src="/static/bootstrap/js/check_data_op.js"></script>
