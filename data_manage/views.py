@@ -18,8 +18,8 @@ def check(request):
     for i in headobj:
         headname.append(i.verbose_name)
     # print(search_field)
+    #搜索
     if request.method=='POST':
-        print('-'*20)
         keyword=request.POST.get('keyword',None)
         search_field=headobj
         from django.db.models import Q
@@ -34,7 +34,7 @@ def check(request):
         print('datalist',datalist)
         if datalist==None:
             datalist=''
-    page=Page(datalist,request,10,3)
+    page=Page(datalist,request,9,1)
     sum=page.Sum()
     return render(request,'data_manage/check_data.html',{'datalist':sum[0],'headname':headname,'keyword':keyword,'page_html':sum[1]})
 
@@ -51,6 +51,8 @@ def checkdata(request,id):
             newfilename=urlquote(filename)
         else:
             filesuffix = '文件为空'
+            filename='文件为空'
+        #文件下载
         if request.method == 'POST':
             path = data.comment.path
             print(path)
@@ -97,12 +99,12 @@ def delete(requset):
             idlist.remove('')
         except Exception:
             pass
-        print(idlist)
         for id in idlist:
             data = models.Data.objects.filter(id=int(id))[0]
-            filepath = data.comment.path
-            if os.path.exists(filepath):  # 如果文件存在
-                os.remove(filepath)  # 则删除
+            if data.comment:
+                filepath = data.comment.path
+                if os.path.exists(filepath):  # 如果文件存在
+                    os.remove(filepath)  # 则删除
             data.delete()
         return JsonResponse({'test':1})
 
@@ -154,3 +156,58 @@ def edit(requset,id):
         newdata.user=datauser
         newdata.save()
         return redirect('/data_manage/check/')
+
+def cheak_category(request):
+    category_list = models.Category.objects.all()
+    if request.method=='POST':
+        keyword=request.POST.get('keyword',None)
+        search_fields=['id','title']
+        from django.db.models import Q
+        search_q = Q()
+        search_q.connector = "or"
+        for search_field in search_fields:
+            # try:
+            search_q.children.append((search_field+ "__icontains", keyword))
+            # except Exception:
+            #     search_q.children.append(('data_name'+ "__icontains", keyword))
+        category_list = models.Category.objects.all().filter(search_q)
+    page = Page(category_list, request, 9, 1)
+    sum = page.Sum()
+    return render(request,'data_manage/check_category.html',{'category_list':sum[0],'page_html':sum[1]})
+
+def add_category(request):
+    if request.method=='POST':
+        category_name=request.POST.get('category_name')
+        models.Category.objects.create(title=category_name)
+        return redirect('/data_manage/check_category/')
+    return render(request,'data_manage/add_category.html')
+
+def delete_category(request):
+    if request.method=='GET':
+        categoryid=request.GET.get('id')
+        category=models.Category.objects.filter(id=categoryid)[0]
+        category.delete()
+        return redirect('/data_manage/check_category/')
+    else:
+        idlist=request.POST.getlist('idlist')
+        print(idlist)
+        #全选操作时,前端传过来的idlist里面有一个空字符,需要删除
+        try:
+            idlist.remove('')
+        except Exception:
+            pass
+        for id in idlist:
+            category = models.Category.objects.filter(id=id)[0]
+            category.delete()
+        return JsonResponse({'test':1})
+
+def edit_category(request,id):
+    category=models.Category.objects.filter(id=id)[0]
+    if request.method=='POST':
+        categorytitle=request.POST.get('category_name')
+        categoryid=request.POST.get('category_id')
+        newcategory=models.Category.objects.get(id=categoryid)
+        newcategory.title=categorytitle
+        newcategory.save()
+        return redirect('/data_manage/check_category')
+    return render(request,'data_manage/edit_category.html',locals())
