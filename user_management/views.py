@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from user_management import models
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, logout
 from django.db.models import Q
 
 
@@ -9,14 +10,48 @@ from django.db.models import Q
 
 
 def auth(request):
-    if request.method == "POST":
-        pass
-    return render(request, "user_management/auth.html")
+    username = request.POST.get("username")
+    employee_id = request.POST.get("employee_id")
+    user = User.objects.filter(username=username)
+    flag = False
+    if request.is_ajax():
+        error = {"status": False, "msg": ""}
+        if not user.exists():
+            error = {"status": True, "msg": "用户名不存在"}
+        # 这里应该去员工表里查数据，并进行判断，确定员工是否存在
+        return JsonResponse(error)
+    elif request.method == "POST":
+        if request.POST.get("permission_status") == "on":
+            status = True
+        else:
+            status = False
+        role_name = request.POST.get("role")
+        role = models.Role.objects.get(role_name=role_name)
+        role.user = user
+        role.action = status
+        role.save()
+        flag = True
+    roles = models.Role.objects.all().values("role_name")
+    return render(request, "user_management/auth.html", {"roles": roles, "flag": flag})
 
 
 def change_pwd(request):
+    username = request.user.username
+    old_password = request.POST.get("old_password")
+    user = authenticate(username=username, password=old_password)
+    new_password = request.POST.get("new_password")
+    confirm_new_password = request.POST.get("confirm_new_password")
+    if request.is_ajax():
+        error = {"status": False, "msg": ""}
+        if not user:
+            error = {"status": True, "msg": "密码错误！"}
+        if new_password != confirm_new_password:
+            error = {"status": True, "msg": "两次输入的密码不一致！"}
+        return JsonResponse(error)
     if request.method == "POST":
-        pass
+        user.set_password(new_password)
+        logout(request)
+        return redirect("/login/")
     return render(request, "user_management/change_pwd.html")
 
 
@@ -102,7 +137,17 @@ def user_info(request):
 
 
 def role_permission(request):
-    return render(request, "user_management/role_permission.html")
+    result = models.Role.objects.all().values(
+        "id",
+        "role_name",
+    ).order_by("id")
+    for item in result:
+        qs = models.PermissionGroup.objects.filter(role__id=item["id"]).values("group_name")
+        permissions = []
+        for permission in qs:
+            permissions.append(permission["group_name"])
+        item["permissions"] = permissions
+    return render(request, "user_management/role_permission.html", {"result": result})
 
 
 def edit_role(request):

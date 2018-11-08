@@ -62,7 +62,6 @@
             })
             $(".check_data").blur(function () {
                 $.ajax({
-                    async: true,
                     url: "/user_management/edit_user/",
                     type: "post",
                     data: {
@@ -79,14 +78,14 @@
                     },
                     success: function (data) {
                         if (data.status) {
-                            {#貌似form里的input的next取不到?扯nm的犊子#}
-                            {#alert($(this).next().text(data.msg));#}
                             $("#error").show()
                             $("#error_msg").text(data.msg)
                             flag = false
                         }
-                        else
+                        else {
                             flag = true
+                            $("#error").hide()
+                        }
                     }
                 });
             });

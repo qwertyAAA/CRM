@@ -23,6 +23,7 @@ class UserInfo(models.Model):
 class Role(models.Model):
     id = models.AutoField(primary_key=True)
     role_name = models.CharField(max_length=32, unique=True, verbose_name="角色名")
+    action = models.BooleanField(default=False, verbose_name="是否授权")
     user = models.ManyToManyField(
         to=User,
         verbose_name="用户"
@@ -37,7 +38,6 @@ class Permission(models.Model):
     role_permission = models.CharField(max_length=32, null=True, verbose_name="角色权限")
     # 用户能看到的数据操作按钮
     data_permission = models.CharField(max_length=32, null=True, verbose_name="数据权限")
-    action = models.BooleanField(default=False, verbose_name="是否授权")
     group = models.ForeignKey(to="PermissionGroup", verbose_name="权限组")
 
 

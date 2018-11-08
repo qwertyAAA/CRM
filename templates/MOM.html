@@ -24,27 +24,40 @@
                 <!--//navbar-left，navbar-right类控制导航栏中属性的靠左还是靠右-->
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="/user_management/role_permission/"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> 权限管理</a>
+                        <a href="/user_management/role_permission/"><span class="glyphicon glyphicon-lock"
+                                                                          aria-hidden="true"></span> 权限管理</a>
                     </li>
                     <li>
-                        <a href="/user_management/user_info/"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 用户管理</a>
+                        <a href="/user_management/user_info/"><span class="glyphicon glyphicon-user"
+                                                                    aria-hidden="true"></span> 用户管理</a>
                     </li>
                     <li>
                         <a href="#"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 系统日志</a>
                     </li>
                     <li>
-                        <a href="#" class="disabled"><i class="fa fa-users" aria-hidden="true"></i> 在线人数</a>
+                        <a href="#"><i class="fa fa-users" aria-hidden="true"></i> 在线人数</a>
                     </li>
-                    <li role="presentation" class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                           aria-expanded="false">
-                            用户<span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a style="font-weight: bolder">个人中心</a></li>
-                            <li><a style="font-weight: bolder">注销</a></li>
-                        </ul>
-                    </li>
+                    {% if request.user.is_anonymous %}
+                        <li>
+                            <a href="/login/" class="disabled"><i class="fa fa-sign-in" aria-hidden="true"></i> 登陆</a>
+                        </li>
+                    {% else %}
+                        <li role="presentation" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                用户<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" style="font-weight: bolder"><i class="fa fa-id-card"
+                                                                               aria-hidden="true"></i> 个人中心</a></li>
+                                <li><a href="/logout/" style="font-weight: bolder"><i class="fa fa-sign-out"
+                                                                                      aria-hidden="true"></i> 注销</a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
                 </ul>
 
             </div>
@@ -118,10 +131,12 @@
                             <li><a href="/user_management/search_user/">搜索用户</a></li>
                         </ul>
                     </li>
+                    {% if not request.user.is_anonymous %}
                     <li>
                         <a href="#"><span
                                 class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;&nbsp;安全退出</a>
                     </li>
+                    {% endif %}
                 </ul>
             </nav>
             <!-- /#sidebar-wrapper -->
@@ -151,9 +166,11 @@
         {% endblock %}
         {% block login %}
         {% endblock %}
+        {% block register %}
+        {% endblock %}
 
         {# 资料库管理模块 #}
-        {% block check_data%}
+        {% block check_data %}
         {% endblock %}
         {% block add_data %}
         {% endblock %}
@@ -179,7 +196,7 @@
         {% endblock %}
 
         {# 员工管理模块 #}
-        {% block employee_info%}
+        {% block employee_info %}
         {% endblock %}
         {% block edit_employee %}
         {% endblock %}
