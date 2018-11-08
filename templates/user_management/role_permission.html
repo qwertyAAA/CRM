@@ -9,9 +9,52 @@
         </div>
         <hr/>
         <div>
-            这里是管理员列表
             <table class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" id="check_all"></th>
+                    <th>管理员编号</th>
+                    <th>管理员分类</th>
+                    <th>管理员拥有的权限</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for role in result %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="check_item">
+                        </td>
+                        <td>
+                            {{ role.id }}
+                        </td>
+                        <td>
+                            {{ role.role_name }}
+                        </td>
+                        <td>
+                            {% for permission in role.permissions %}
+                                {{ permission }};
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
             </table>
         </div>
     </div>
+    <script type="text/javascript">
+        $(function () {
+            var flag = false
+            $("#check_all").click(function () {
+                if (flag) {
+                    flag = false
+                    $(".check_item").attr("checked", flag)
+                }
+                else {
+                    flag = true
+                    $(".check_item").attr("checked", flag)
+                }
+            })
+        })
+    </script>
 {% endblock %}

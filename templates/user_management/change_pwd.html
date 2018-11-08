@@ -13,10 +13,11 @@
     <div class="col-md-offset-4">
         <hr/>
         <form action="" method="post" class="form-horizontal">
+            {% csrf_token %}
             <div class="form-group">
                 <label for="username" class="col-sm-2 control-label">用户名：</label>
                 <div class="col-sm-5">
-                    <p class="form-control-static">zhangsan</p>
+                    <p class="form-control-static">{{ request.user.username }}</p>
                 </div>
             </div>
             <br/>
@@ -37,7 +38,8 @@
             <div class="form-group">
                 <label for="confirm_new_password" class="col-sm-2 control-label">确认新密码：</label>
                 <div class="col-sm-5">
-                    <input type="password" class="form-control check_data" id="confirm_new_password" name="confirm_new_password">
+                    <input type="password" class="form-control check_data" id="confirm_new_password"
+                           name="confirm_new_password">
                 </div>
             </div>
             <br/>
@@ -49,28 +51,44 @@
             </div>
             <br/>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary btn-lg" style="width: 200px;" value="保存"/>
-                <input type="reset" class="btn btn-warning btn-lg" style="width: 200px;" value="取消"/>
+                <input type="submit" class="btn btn-primary" disabled="disabled" id="save"
+                       style="width: 200px;" value="保存"/>
+                <input type="reset" class="btn btn-warning"
+                       style="width: 200px;" value="取消"/>
             </div>
         </form>
     </div>
     <script type="text/javascript">
         $(function () {
+            var flag = false
+            $(".check_data").focus(function () {
+                $("#error").hide()
+            })
             $(".check_data").blur(function () {
                 $.ajax({
-                    url: "/user_management/check_data/",
+                    url: "/user_management/change_pwd/",
                     type: "post",
                     data: {
-                        "key": $(this).attr("id"),
-                        "value": $(this).val(),
+                        "old_password": $("#old_password").val(),
+                        "new_password": $("#new_password").val(),
+                        "confirm_new_password": $("#confirm_new_password").val(),
                         "csrfmiddlewaretoken": "{{ csrf_token }}"
+                    },
+                    complete: function () {
+                        if (flag)
+                            $("#save").removeAttr("disabled")
+                        else
+                            $("#save").attr("disabled", "disabled")
                     },
                     success: function (data) {
                         if (data.status) {
-                            {#貌似form里的input的next取不到?扯nm的犊子#}
-                            {#alert($(this).next().text(data.msg));#}
                             $("#error").show()
                             $("#error_msg").text(data.msg)
+                            flag = false
+                        }
+                        else {
+                            flag = true
+                            $("#error").hide()
                         }
                     }
                 });
