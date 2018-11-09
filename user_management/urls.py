@@ -24,6 +24,4 @@ urlpatterns = [
     url(r"^user_info/", views.user_info),
     url(r"^role_permission/", views.role_permission),
     url(r"^edit_role/", views.edit_role),
-
-
 ]
