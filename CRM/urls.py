@@ -22,7 +22,6 @@ from CRM import settings
 from django.contrib import admin
 
 urlpatterns = [
-    # url(r'^admin/', admin.site.urls),
     url(r"^$", mpv.index),
     url(r"^index/", mpv.index),
     url(r"^login/", mpv.my_login),
