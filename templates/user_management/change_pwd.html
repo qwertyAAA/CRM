@@ -1,0 +1,100 @@
+{% extends "MOM.html" %}
+{% block change_pwd %}
+    <div align="center">
+        <h2><strong>修改密码</strong></h2>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <div class="col-md-offset-4">
+        <hr/>
+        <form action="" method="post" class="form-horizontal">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username" class="col-sm-2 control-label">用户名：</label>
+                <div class="col-sm-5">
+                    <p class="form-control-static">{{ request.user.username }}</p>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label for="old_password" class="col-sm-2 control-label">旧密码：</label>
+                <div class="col-sm-5">
+                    <input type="password" class="form-control check_data" id="old_password" name="old_password">
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label for="new_password" class="col-sm-2 control-label">新密码：</label>
+                <div class="col-sm-5">
+                    <input type="password" class="form-control check_data" id="new_password" name="new_password">
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label for="confirm_new_password" class="col-sm-2 control-label">确认新密码：</label>
+                <div class="col-sm-5">
+                    <input type="password" class="form-control check_data" id="confirm_new_password"
+                           name="confirm_new_password">
+                </div>
+            </div>
+            <br/>
+            <div class="form-group" id="error" style="display: none;">
+                <label for="error_msg" class="col-sm-2 control-label">错误信息：</label>
+                <div class="col-sm-5">
+                    <p id="error_msg" class="form-control-static" style="color: red;"></p>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" disabled="disabled" id="save"
+                       style="width: 200px;" value="保存"/>
+                <input type="reset" class="btn btn-warning"
+                       style="width: 200px;" value="取消"/>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var flag = false
+            $(".check_data").focus(function () {
+                $("#error").hide()
+            })
+            $(".check_data").blur(function () {
+                $.ajax({
+                    url: "/user_management/change_pwd/",
+                    type: "post",
+                    data: {
+                        "old_password": $("#old_password").val(),
+                        "new_password": $("#new_password").val(),
+                        "confirm_new_password": $("#confirm_new_password").val(),
+                        "csrfmiddlewaretoken": "{{ csrf_token }}"
+                    },
+                    complete: function () {
+                        if (flag)
+                            $("#save").removeAttr("disabled")
+                        else
+                            $("#save").attr("disabled", "disabled")
+                    },
+                    success: function (data) {
+                        if (data.status) {
+                            $("#error").show()
+                            $("#error_msg").text(data.msg)
+                            flag = false
+                        }
+                        else {
+                            flag = true
+                            $("#error").hide()
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+
+{% endblock %}

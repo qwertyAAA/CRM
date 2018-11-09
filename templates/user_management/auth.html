@@ -1,0 +1,120 @@
+{% extends "MOM.html" %}
+{% block auth %}
+    <div align="center">
+        <h2><strong>用户授权</strong></h2>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+    <div class="col-md-offset-4">
+        <hr/>
+        <form action="" method="post" class="form-horizontal">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username" class="col-sm-2 control-label">用户名：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control check_data" id="username" name="username" placeholder="张三">
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label for="employee_id" class="col-sm-2 control-label">员工编号：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control check_data" id="employee_id" name="employee_id"
+                           placeholder="123456"/>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label for="role" class="col-sm-2 control-label">管理员分类：</label>
+                <div class="col-sm-5">
+                    <select class="form-control" name="role" id="role">
+                        {% for role in roles %}
+                            <option>{{ role.role_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">授权状态：</label>
+                <div class="col-sm-5">
+                    <label class="radio-inline">
+                        <input type="radio" name="permission_status" value="on"/>启用
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="permission_status" value="off" checked="checked"/>禁用
+                    </label>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group" id="error" style="display: none;">
+                <label for="error_msg" class="col-sm-2 control-label">错误信息：</label>
+                <div class="col-sm-5">
+                    <p id="error_msg" class="form-control-static" style="color: red;"></p>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group" id="error" style="display: none;">
+                <label for="error_msg" class="col-sm-2 control-label">错误信息：</label>
+                <div class="col-sm-5">
+                    <p id="error_msg" class="form-control-static" style="color: red;"></p>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" disabled="disabled" id="save"
+                       style="width: 200px;" value="保存"/>
+                <input type="reset" class="btn btn-warning"
+                       style="width: 200px;" value="取消"/>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var flag = false
+            $(".check_data").focus(function () {
+                $("#error").hide()
+            })
+            {% if flag %}
+                alert("授权成功！")
+            {% endif %}
+            $(".check_data").blur(function () {
+                $.ajax({
+                    url: "/user_management/auth/",
+                    type: "post",
+                    data: {
+                        "username": $("#username").val(),
+                        "employee_id": $("#employee_id").val(),
+                        "csrfmiddlewaretoken": "{{ csrf_token }}"
+                    },
+                    complete: function () {
+                        if (flag)
+                            $("#save").removeAttr("disabled")
+                        else
+                            $("#save").attr("disabled", "disabled")
+                    },
+                    success: function (data) {
+                        if (data.status) {
+                            {#貌似form里的input的next取不到?扯nm的犊子#}
+                            {#alert($(this).next().text(data.msg));#}
+                            $("#error").show()
+                            $("#error_msg").text(data.msg)
+                            flag = false
+                        }
+                        else {
+                            flag = true
+                            $("#error").hide()
+                        }
+                    }
+                });
+            });
+        });
+
+    </script>
+{% endblock %}

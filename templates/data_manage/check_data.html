@@ -1,40 +1,76 @@
 {% extends 'MOM.html' %}
 
 {% block check_data %}
-{#<h1>nihao</h1>#}
+<div class="row">
+    <h3 style="text-align: center;font-weight: bolder">文件列表</h3>
+    <hr>
+</div>
+
 <div class="row" style="margin-bottom: 3px">
-    <form action="/data_manage/add/" method="get">
+    <div class="col-lg-1">
+        <form action="/data_manage/add/" method="get">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">新增文件</button>
+        </form>
+    </div>
+    <div class="col-lg-1">
+        <button type="button" id="deletebt" class="btn btn-danger">删除文件</button>
+    </div>
+
+    <form action="" method="post">
         {% csrf_token %}
-        <button class="btn btn-primary">新增文件</button>
+        <div class="form-group col-lg-3 col-lg-offset-6">
+            <label class="sr-only" for="exampleInputEmail3">搜索框</label>
+            {% if keyword == '' %}
+                <input type="text" class="form-control" name="keyword" id="exampleInputEmail3" placeholder="请根据编号或者资料名查找">
+            {% else %}
+                <input type="text" class="form-control" name="keyword" id="exampleInputEmail3" placeholder="请根据编号或者资料名查找" value="{{ keyword }}">
+            {% endif %}
+        </div>
+        <div class="col-lg-1">
+            <button type="submit" class="btn btn-primary">查询</button>
+        </div>
     </form>
+
+
 </div>
 
 <div class="row">
     <table class="table table-bordered">
         <thead>
-                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox" id="all" name="checkbox"></td>
                     <td>{{ headname.0 }}</td>
                     <td>{{ headname.1 }}</td>
                     <td>{{ headname.6 }}</td>
                     <td>{{ headname.5 }}</td>
                     <td>{{ headname.3 }}</td>
                     <td>{{ headname.4 }}</td>
+                    <td>操作</td>
         </thead>
         <tbody>
             {% for data in datalist %}
                 <tr>
-                {{ data.ver }}
-                    <td><input type="checkbox"></td>
-                    <td>{{ data.id }}</td>
+                    <td><input type="checkbox" class="one" dataid="{{ data.id }}"></td>
+                    <td class="dataid">{{ data.id }}</td>
                     <td>{{ data.data_name }}</td>
                     <td>{{ data.category }}</td>
                     <td>{{ data.user.username }}</td>
                     <td>{{ data.create_time }}</td>
                     <td>{{ data.update_time }}</td>
+                    <td>
+                        <a href="/data_manage/edit/{{ data.id }}/">编辑</a>
+                        <a href="/data_manage/delete/?id={{ data.id }}">删除</a>
+                        <a href="/data_manage/data/{{ data.id }}/">查看</a>
+                    </td>
                 </tr>
             {% endfor %}
 
         </tbody>
     </table>
 </div>
+<div class="row">
+    {% include 'data_manage/checkdata_page.html' %}
+</div>
+
+    <script src="/static/bootstrap/js/check_data_op.js"></script>
 {% endblock %}

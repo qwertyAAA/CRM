@@ -1,0 +1,73 @@
+{% extends 'MOM.html' %}
+{% block edit_data %}
+    <style>
+        #dataname{
+            width: 500px;
+            margin-right: 5px;
+        }
+        .addpage{
+            width: 300px;
+            margin-right: 5px;
+        }
+        .row{
+            margin-bottom: 20px;
+        }
+        img{
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+    <form action="/data_manage/edit/{{ dataid }}/" method="post" enctype="multipart/form-data" id="dataform">
+        {% csrf_token %}
+        <div class="row">
+            <p><span>基本资料信息</span>
+            <hr>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-lg-7">
+                <label for="dataname">资料名称</label>
+                <input type="text" class="form-control suffix" id="dataname" name="dataname" value="{{ dataname }}">
+                <input type="text" style="display: none" name="daid" value="{{ dataid }}" >
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="selected col-lg-8">
+                <label for="ddatacategory">资料分类</label>
+                <select class="form-control addpage suffix" id="datacategory" name="category">
+                    <option style="color: #9d9d9d" hidden>请选择资料分类</option>
+                    {% for category in categorylist %}
+                        {% if categorytitle == category.title %}
+                            <option value="{{ category.id }}" selected="selected">{{ category.title }}</option>
+                        {% else %}
+                            <option value="{{ category.id }}">{{ category.title }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3">
+                <label for="datafile">上传文件</label>
+                <input type="file" id="datafile" class="suffix" name="datafile" value="{{ datafile }}">
+            </div>
+
+            <div class="col-lg-2">
+                <img src='/static/image/女神.jpg'>
+                <span style="margin-top: 10px;">{{ filesuffix }}文件<br></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-lg-8">
+                <label for="datauser">发布者</label>
+                <input type="text" class="form-control addpage suffix" id="datauser" name="datauser" value="{{ datauser }}">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">确定编辑</button>
+    </form>
+    <script src="/static/bootstrap/js/edit&add_data_op.js"></script>
+{% endblock %}

@@ -51,6 +51,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 用户验证中间件
+    # "CheckLoginMiddleWare.CheckLogin",
+    # 权限管理中间件
+    # "AuthMiddleWare.CheckAuth"
 ]
 
 ROOT_URLCONF = 'CRM.urls'
@@ -85,7 +89,9 @@ DATABASES = {
         'PORT': 3306,
         'NAME': 'crm',
         'USER': 'root',
-        'PASSWORD': '123456'
+        'PASSWORD': '123456',
+
+
     }
 }
 
@@ -131,6 +137,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+MEDIA_ROOT=os.path.join(BASE_DIR,"media") #注意:这里配置os的时候,不像配置static的时候要[],这里不需要[]
+MEDIA_URL="/media/"
 
 # Session 的引擎：db+缓存
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"

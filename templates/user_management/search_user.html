@@ -1,0 +1,76 @@
+{% extends "MOM.html" %}
+{% block search_user %}
+    <div align="center">
+        <h2><strong>搜索用户</strong></h2>
+    </div>
+    <div class="col-md-offset-1">
+        <form class="form-inline">
+            <div class="form-group">
+                <input type="text" class="form-control" id="value"/>
+            </div>
+            <div class="form-group">
+                <select class="form-control" id="key">
+                    {% for item in keys %}
+                        <option value="{{ item.0 }}">{{ item.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="button" id="select_user" class="btn btn-info">查询</button>
+        </form>
+
+        <hr/>
+        <div>
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" id="check_all"></th>
+                    <th>用户编号</th>
+                    <th>用户名</th>
+                    <th>管理员分类</th>
+                    <th>员工姓名</th>
+                    <th>部门名称</th>
+                    <th>创建日期</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="user_info"></tbody>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var flag = false
+            $("#check_all").click(function () {
+                if (flag) {
+                    flag = false
+                    $(".check_item").attr("checked", flag)
+                }
+                else {
+                    flag = true
+                    $(".check_item").attr("checked", flag)
+                }
+            })
+            $("#select_user").click(function () {
+                $("#user_info").html("")
+                $.ajax({
+                    url: "/user_management/select_user/",
+                    type: "post",
+                    data: {
+                        "key": $("#key").val(),
+                        "value": $("#value").val(),
+                        "csrfmiddlewaretoken": "{{ csrf_token }}"
+                    },
+                    success: function (data) {
+                        if (data.status) {
+                            $("#user_info").append(data.html)
+                        }
+                        else {
+                            alert("请输入内容！")
+                        }
+                    }
+                });
+            });
+        });
+
+    </script>
+{% endblock %}
