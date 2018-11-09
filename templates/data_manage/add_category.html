@@ -26,8 +26,34 @@
                 <input type="text" class="form-control suffix" id="dataname" name="category_name">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary" id="databtn">提交</button>
+        <button type="submit" class="btn btn-primary" id="databtn">提交</button><a href="/data_manage/check_category/" class="btn btn-danger">取消</a>
     </form>
-<script src="/static/bootstrap/js/edit&add_category_op.js">
-</script>
+    <script>
+        $('#dataform').submit(function () {
+            var newname=$('#dataname').val();
+            var flag=false;
+            var titlelist= {{ titlelist|safe }};
+            for (i = 0; i < titlelist.length; i++)
+            {
+                if (newname == titlelist[i])
+                {
+                    alert('该类别名已经存在');
+                    return false
+                }
+            }
+            if (newname)
+            {
+                if (newname in titlelist){
+                    return false
+                }
+                else {
+                    return true
+                }
+            }
+            else {
+                alert('请填写类别名称');
+                return false
+            }
+        });
+    </script>
 {% endblock %}
