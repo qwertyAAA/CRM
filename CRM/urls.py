@@ -13,24 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
+from django.conf.urls import url,include
+from django.contrib import admin
+from django.conf.urls import include
 from main_page import views as mpv
 from data_manage import urls as data_manage_urls
 from employee_management import urls as employee_management_urls
-from django.views.static import serve
-from CRM import settings
-from django.contrib import admin
 
 urlpatterns = [
-    # url(r'^admin/', admin.site.urls),
     url(r"^$", mpv.index),
-    url(r"^index/", mpv.index),
-    url(r"^login/", mpv.my_login),
-    url(r"^get_valid_img.png/", mpv.get_valid_img),
-    url(r"^logout/", mpv.my_logout),
-    url(r'^data_manage/', include(data_manage_urls)),
+    url(r'^admin/', admin.site.urls),
+    url(r'^data_manage/',include(data_manage_urls)),
     url(r"^user_management/", include("user_management.urls")),
     url(r"^employee_management/", include(employee_management_urls)),
-    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 
 ]

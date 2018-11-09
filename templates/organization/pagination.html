@@ -1,0 +1,17 @@
+<div id="pagination" class="pull-right">
+    {% if organ_list.has_previous %}
+        <span class="previous"><a href="?page=
+                                {{ organ_list.previous_page_number }}">&laquo;上一页</a>
+                        </span>
+    {% else %}
+        <span class="previous-off">&laquo;上一页</span>
+    {% endif %}
+    <span class="active">{{ organ_list.number }}/{{ organ_list.paginator.num_pages }}</span>
+    {% if organ_list.has_next %}
+        <span class="next"><a href="?page=
+                                {{ organ_list.next_page_number }}">下一页
+                            &raquo;</a></span>
+    {% else %}
+        <span class="next-off">下一页 &raquo;</span>
+    {% endif %}
+</div>

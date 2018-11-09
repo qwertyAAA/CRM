@@ -1,0 +1,223 @@
+{% extends "MOM.html" %}
+{% block css %}
+    <style>
+        .must {
+            color: red;
+            font-size: medium;
+        }
+
+        div.row {
+            margin-top: 6px;
+        }
+
+        .beizhu {
+            width: 600px;
+            height: 100px;
+        }
+
+        .fenlei {
+            font-size: large;
+            text-align: left;
+        }
+
+        .bitian {
+            display: block;
+            text-align: right;
+        }
+
+        div > span {
+            text-align: right;
+        }
+    </style>
+{% endblock %}
+{% block organ %}
+    <h3 align="center" id="linkman_title">编辑联系人信息</h3><br/><br/>
+    <span class="fenlei">联系人基本信息：</span><span class="bitian">注：带有“ * ”必填项</span>
+    <hr/>
+    <form action="/organization/linkman_edit/{{ linkman_obj.id }}/" method="post">
+        {% csrf_token %}
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>机构名称：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" id="organ_name" name="organ_name" size="70">
+                    <button type="button" class="btn btn-info">查询</button>
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>姓名：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" id="name" name="name" size="70">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>性别：</span>
+                </div>
+                <div class="col-xs-1">
+                    <input type="radio" name="gender" value="1">男
+                </div>
+                <div class="col-xs-9">
+                    <input type="radio" name="gender" value="0">女
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>手机：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" id="phone" name="phone" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>职务：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" id="duty" name="duty" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>邮箱：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" id="email" name="email" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>QQ：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" id="QQ" name="QQ" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>地址：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" id="adress" name="adress" size="30">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>重要等级：</span>
+                </div>
+                <div class="col-xs-10">
+                    <select name="link_important" id="link_important">
+                        <option value="一般">一般</option>
+                        <option value="重要">重要</option>
+                        <option value="非常重要">非常重要</option>
+                    </select>
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>跟进状态：</span>
+                </div>
+                <div class="col-xs-10">
+                    <select name="following" id="following">
+                        <option value="未处理">未处理</option>
+                        <option value="有效">有效</option>
+                        <option value="无效">无效</option>
+                        <option value="放弃">放弃</option>
+                    </select>
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>经办人：</span>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" id="link_agent" name="link_agent" size="30">
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <span>是否认可：</span>
+                </div>
+                <div class="col-xs-1">
+                    <input type="radio" name="isaccept" value="1">是
+                </div>
+                <div class="col-xs-9">
+                    <input type="radio" name="isaccept" value="0">否
+                    <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <span>备注信息：</span>
+                </div>
+                <div class="col-md-10">
+                    <textarea class="beizhu" id="remark" name="remark"></textarea>
+                </div>
+            </div>
+        </div>
+        <br/><br/>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-4">
+                <button type="submit" class="btn btn-primary btn-lg active">确定编辑</button>
+            </div>
+            <div class="col-md-2">
+                <a href="/organization/linkman_list/" class="btn btn-default btn-lg active" role="button">取消</a>
+            </div>
+        </div>
+    </form>
+    <br/><br/>
+
+    <script>
+        $(function () {
+            $.ajax({
+                url: "/organization/linkman_detail/" + "{{ linkman_obj.id }}/",
+                success: function (data) {
+                    $("#organ_name").val(data[1]);
+                    $("#name").val(data[0].name);
+                    //$("#gender").val(data[0].gender);
+                    if (data[0].gender) {
+                        $("input[name='gender'][value='1']").attr("checked", true);
+                    } else {
+                        $("input[name='gender'][value='0']").attr("checked", true);
+                    }
+                    $("#linkman_title").text("编辑联系人（" + data[0].name + "）");
+                    $("#duty").val(data[0].duty);
+                    $("#phone").val(data[0].phone);
+                    $("#email").val(data[0].email);
+                    $("#QQ").val(data[0].QQ);
+                    $("#adress").val(data[0].adress);
+                    $("#link_important").val(data[0].link_important);
+                    $("#following").val(data[0].following);
+                    $("#link_agent").val(data[0].link_agent);
+                    //$("#isaccept").val(data[0].isaccept);
+                    if (data[0].isaccept) {
+                        $("input[name='isaccept'][value='1']").attr("checked", true);
+                    } else {
+                        $("input[name='isaccept'][value='0']").attr("checked", true);
+                    }
+                    $("#remark").val(data[0].remark);
+                }
+
+
+            });
+
+
+        })
+
+
+    </script>
+{% endblock %}

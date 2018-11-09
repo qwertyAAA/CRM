@@ -1,0 +1,112 @@
+{% extends "MOM.html" %}
+{% block css %}
+    <style>
+        .col-md-6 {
+            margin-top: 20px;
+        }
+    </style>
+{% endblock %}
+{% block organ %}
+    <h2 align="center">{{ org_obj.org_name }}（详情）</h2><br/><br/>
+    <h3 align="left">基本信息</h3>
+    <div class="pull-right">
+        <a href="/organization/edit/{{ org_obj.id }}" class="btn btn-primary" role="button">编辑</a>
+        <a href="/organization/" class="btn btn-primary" role="button">返回列表</a>
+    </div>
+    <hr/>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                机构名称：{{ org_obj.org_name }}
+            </div>
+            <div class="col-md-6">
+                邮编：{{ org_obj.postcode }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                机构地址：{{ org_obj.org_address }}
+            </div>
+            <div class="col-md-6">
+                网站：{{ org_obj.site }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                联系人：{{ org_obj.linkman }}
+            </div>
+            <div class="col-md-6">
+                行业类别：{{ org_obj.industry }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                手机：{{ org_obj.mobile }}
+            </div>
+            <div class="col-md-6">
+                区域等级：{{ org_obj.area_level }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                电话：{{ org_obj.tel }}
+            </div>
+            <div class="col-md-6">
+                国家：{{ org_obj.country }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                省份：{{ org_obj.province }}
+            </div>
+            <div class="col-md-6">
+                城市：{{ org_obj.city }}
+            </div>
+        </div>
+    </div>
+    <br/><br/>
+    <h3 align="left">其他信息</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                经办人：{{ org_obj.agent }}
+            </div>
+            <div class="col-md-6">
+                采购途径：{{ org_obj.pur_way }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                分配情况：{% if org_obj.distribution %}已分配{% else %}未分配{% endif %}
+            </div>
+            <div class="col-md-6">
+                采购级别：{{ org_obj.pur_level }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                审核状态：{{ org_obj.check_status }}
+            </div>
+            <div class="col-md-6">
+                机构类型：{{ org_obj.org_category }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                跟进状态：{{ org_obj.follow_status }}
+            </div>
+            <div class="col-md-6">
+
+            </div>
+        </div>
+        <br/><br/>
+        <div class="row">
+        <div class="col-md-2 col-md-offset-5">
+            <a href="/organization/"><button type="button" class="btn btn-default btn-lg">关闭</button></a>
+        </div>
+        </div>
+    </div>
+    <br/><br/>
+
+
+{% endblock %}

@@ -8,6 +8,10 @@
     <script src="/static/bootstrap/jquery-3.3.1.min.js"></script>
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css">
+    {% block css %}
+    {% endblock %}
+    {% block js %}
+    {% endblock %}
 </head>
 <body>
 {#导航栏#}
@@ -86,11 +90,10 @@
                                 class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;客户管理</a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="dropdown-header"></li>
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li><a href="#">One more separated link</a></li>
+                            <li><a href="/organization/">客户列表</a></li>
+                            <li><a href="/organization/add/">创建信息</a></li>
+                            <li><a href="/organization/linkman_list/">联系人列表</a></li>
+                            <li><a href="/organization/linkman_add/">创建联系人</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -206,6 +209,8 @@
 
 
         {# 客户管理模块 #}
+        {% block organ %}
+        {% endblock %}
         {# to do... #}
     </div>
     {#右侧显示内容(预留)  #}
