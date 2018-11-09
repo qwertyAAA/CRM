@@ -53,7 +53,7 @@
             $("#select_user").click(function () {
                 $("#user_info").html("")
                 $.ajax({
-                    url: "/user_management/select_user/",
+                    url: "/user_management/search_user/",
                     type: "post",
                     data: {
                         "key": $("#key").val(),

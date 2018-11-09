@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
-
+from user_management import models
 # Create your views here.
 
 
@@ -21,6 +21,12 @@ def my_login(request):
             if user:
                 ret["msg"] = "/index/"
                 login(request=request, user=user)
+                role_permission = []
+                qs = models.Permission.objects.filter(group__role__user=user).values_list("role_permission")
+                for item in qs:
+                    role_permission.append(item[0])
+                print(role_permission)
+                request.session["role_permission"] = role_permission
                 if remember_me == "true":
                     request.session.set_expiry(None)
                 else:
