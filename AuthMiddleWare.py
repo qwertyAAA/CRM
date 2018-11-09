@@ -6,7 +6,7 @@ class CheckAuth(MiddlewareMixin):
 
     @staticmethod
     def process_request(request):
-        white_list = ["/", "/login/", "/register/", "/index/", "/get_valid_img.png/", "/logout/"]
+        white_list = ["/", "/login/", "/index/", "/get_valid_img.png/", "/logout/", "/user_management/edit_user/"]
         if request.path_info in white_list:
             return
         current_permission = request.session.get("role_permission")
