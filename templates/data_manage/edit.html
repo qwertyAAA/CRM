@@ -64,10 +64,12 @@
         <div class="row">
             <div class="form-group col-lg-8">
                 <label for="datauser">发布者</label>
-                <input type="text" class="form-control addpage suffix" id="datauser" name="datauser" value="{{ datauser }}">
+                <input type="text" class="form-control addpage suffix" id="datauser" value="{{ datauser }}" disabled>
+                <input type="text" class="form-control addpage suffix" style="display: none" name="datauser" value="{{ datauser }}">
             </div>
         </div>
         <button type="submit" class="btn btn-primary">确定编辑</button>
+        <a href="/data_manage/check_category/" class="btn btn-danger">取消编辑</a>
     </form>
     <script src="/static/bootstrap/js/edit&add_data_op.js"></script>
 {% endblock %}

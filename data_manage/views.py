@@ -6,6 +6,7 @@ from django.utils.http import urlquote
 from Myutils.pageutil import Page
 import os
 # Create your views here.
+
 def check(request):
     datalist=models.Data.objects.all()
     #得到当前app下面的data类
@@ -34,7 +35,7 @@ def check(request):
         print('datalist',datalist)
         if datalist==None:
             datalist=''
-    page=Page(datalist,request,9,1)
+    page=Page(datalist,request,9,10)
     sum=page.Sum()
     return render(request,'data_manage/check_data.html',{'datalist':sum[0],'headname':headname,'keyword':keyword,'page_html':sum[1]})
 
@@ -76,9 +77,10 @@ def add(request):
         categoryid=request.POST.get('category')
         category=models.Category.objects.filter(id=categoryid).first()
         datausername=request.POST.get('datauser')
-        datauser=models.User.objects.filter(username=datausername).first()
+        datauser=models.User.objects.filter(username=datausername)[0]
+        print(datauser.username)
         datafile=request.FILES.get('datafile')
-        newdata=models.Data.objects.create(data_name=dataname,category=category,comment=datafile,user=datauser)
+        newdata=models.Data.objects.create(data_name=dataname,category=category,comment=datafile,user=datauser,user_id=datauser.id)
         return redirect('/data_manage/check/')
     return render(request,'data_manage/add_data.html',{'category':categorylist})
 
@@ -171,16 +173,21 @@ def cheak_category(request):
             # except Exception:
             #     search_q.children.append(('data_name'+ "__icontains", keyword))
         category_list = models.Category.objects.all().filter(search_q)
-    page = Page(category_list, request, 9, 1)
+    page = Page(category_list, request, 9, 10)
     sum = page.Sum()
     return render(request,'data_manage/check_category.html',{'category_list':sum[0],'page_html':sum[1]})
 
 def add_category(request):
+    title=models.Category.objects.all().values('title')
+    titlelist=[]
+    for i in title:
+        titlelist.append(i['title'])
+    print(titlelist)
     if request.method=='POST':
         category_name=request.POST.get('category_name')
         models.Category.objects.create(title=category_name)
         return redirect('/data_manage/check_category/')
-    return render(request,'data_manage/add_category.html')
+    return render(request,'data_manage/add_category.html',{'titlelist':titlelist})
 
 def delete_category(request):
     if request.method=='GET':
@@ -203,6 +210,10 @@ def delete_category(request):
 
 def edit_category(request,id):
     category=models.Category.objects.filter(id=id)[0]
+    title = models.Category.objects.all().values('title')
+    titlelist = []
+    for i in title:
+        titlelist.append(i['title'])
     if request.method=='POST':
         categorytitle=request.POST.get('category_name')
         categoryid=request.POST.get('category_id')
@@ -210,4 +221,4 @@ def edit_category(request,id):
         newcategory.title=categorytitle
         newcategory.save()
         return redirect('/data_manage/check_category')
-    return render(request,'data_manage/edit_category.html',locals())
+    return render(request,'data_manage/edit_category.html',{'titlelist':titlelist,'categroy':category})

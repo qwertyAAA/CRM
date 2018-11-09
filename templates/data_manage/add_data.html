@@ -49,10 +49,12 @@
         <div class="row">
             <div class="form-group col-lg-3">
                 <label for="datauser">发布者</label>
-                <input type="text" class="form-control addpage suffix" id="datauser" name="datauser">
+                <input type="text" class="form-control addpage suffix" id="datauser" disabled="disabled" value="{{ request.user.username }}">
+                <input type="text" class="form-control addpage suffix" id="datauser" name="datauser" style="display: none" value="{{ request.user.username }}">
             </div>
         </div>
         <button type="submit" class="btn btn-primary" id="databtn">提交</button>
+        <a href="/data_manage/check/" class="btn btn-danger">取消</a>
     </form>
 <script src="/static/bootstrap/js/edit&add_data_op.js"></script>
 <script type="text/javascript">
