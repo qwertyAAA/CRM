@@ -34,7 +34,7 @@ $('#all').click(function () {
             }
             $.ajax({
                 type:'post',
-                url:'/data_manage/delete/',
+                url:'/data_manage/delete_category/',
                 dataType:'json',
                 traditional:true,
                 data:{
@@ -42,7 +42,7 @@ $('#all').click(function () {
                     "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val()
                 },
                 success:function (data) {
-                    location.href='/data_manage/check/'
+                    location.href='/data_manage/check_category/'
                 }
             })
         });
