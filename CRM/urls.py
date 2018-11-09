@@ -21,6 +21,7 @@ from django.views.static import serve
 from CRM import settings
 from django.contrib import admin
 
+# 主url
 urlpatterns = [
     url(r"^$", mpv.index),
     url(r"^index/", mpv.index),
@@ -31,5 +32,4 @@ urlpatterns = [
     url(r"^user_management/", include("user_management.urls")),
     url(r"^employee_management/", include(employee_management_urls)),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
-
 ]
