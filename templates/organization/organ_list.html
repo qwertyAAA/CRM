@@ -4,33 +4,43 @@
         th {
             text-align: center;
         }
-        #search_header{
+
+        #search_header {
             height: 32px;
         }
     </style>
 {% endblock %}
 {% block organ %}
-    <h3 align="center">机构信息列表</h3><br/>
+    <h2 align="center">机构信息列表</h2><br/>
     <div class="container">
         <div class="row">
+            <div class="col-md-2">
+                <select class="form-control" id="operate_type" name="operate_type">
+                    <option value="--------" selected="selected">--------</option>
+                    <option value="batch_del">批量删除</option>
+                </select>
+            </div>
             <div class="col-md-1">
-                <a href="/organization/add/" class="btn btn-lg btn-primary" role="button">新增机构</a>
+                <button class="btn btn-warning" id="batch_btn">执行</button>
+            </div>
+            <div class="col-md-1">
+                <a href="/organization/add/" class="btn btn-primary" role="button">新增机构</a>
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-1">
-                <a href="/organization/linkman_list/" class="btn btn-lg btn-primary" role="button">联系人</a>
+                <a href="/organization/linkman_list/" class="btn btn-primary" role="button">联系人</a>
             </div>
-            <div class="col-md-5"></div>
+            <div class="col-md-1"></div>
             <form action="/organization/search/" method="post" name="org_search">
                 {% csrf_token %}
                 <div class="col-md-2">
                     <input type="text" name="search_key" class="form-control" placeholder="请输入关键字">
                 </div>
-                <div class="col-md-1">
-                    <select id="search_header" name="header">
-{#                        {% for header in header_list %}#}
-{#                            <option value="{{ header }}">{{ header }}</option>#}
-{#                        {% endfor %}#}
+                <div class="col-md-2">
+                    <select id="search_header" class="form-control" name="header">
+                        {#                        {% for header in header_list %}#}
+                        {#                            <option value="{{ header }}">{{ header }}</option>#}
+                        {#                        {% endfor %}#}
                         <option value="机构名称">机构名称</option>
                         <option value="省份">省份</option>
                         <option value="城市">城市</option>
@@ -41,7 +51,7 @@
                     </select>
                 </div>
                 <div class="col-md-1">
-                    <button type="submit" class="btn btn-primary btn-lg">查询</button>
+                    <button type="submit" class="btn btn-primary">查询</button>
                 </div>
             </form>
         </div>
@@ -49,7 +59,7 @@
         <div class="row">
             <table class="table table-bordered">
                 <tr style="text-align: center">
-                    <th><input type="checkbox" name="select_org"></th>
+                    <th><input type="checkbox" id="select_all"></th>
                     <th>编号</th>
                     <th colspan="2">{{ header_list.1 }}</th>
                     <th>{{ header_list.10 }}</th>
@@ -61,7 +71,7 @@
                 </tr>
                 {% for organ in organ_list %}
                     <tr style="text-align: center">
-                        <td><input type="checkbox" name="'select_'+'{{ organ.id }}'"></td>
+                        <td><input type="checkbox" name="organ_item" id="{{ organ.id }}"></td>
                         <td>{{ forloop.counter }}</td>
                         <td colspan="2">{{ organ.org_name }}</td>
                         <td>{{ organ.industry }}</td>
@@ -79,5 +89,72 @@
 
             </table>
         </div>
+        <div class="row">
+            <div id="pagination" class="pull-right">
+                    {% if organ_list.has_previous %}
+                        <span class="previous"><a href="?page=
+                                {{ organ_list.previous_page_number }}">&laquo;上一页</a>
+                        </span>
+                    {% else %}
+                        <span class="previous-off">&laquo;上一页</span>
+                    {% endif %}
+                    <span class="active">{{ organ_list.number }}/{{ organ_list.paginator.num_pages }}</span>
+                    {% if organ_list.has_next %}
+                        <span class="next"><a href="?page=
+                                {{ organ_list.next_page_number }}">下一页
+                            &raquo;</a></span>
+                    {% else %}
+                        <span class="next-off">下一页 &raquo;</span>
+                    {% endif %}
+            </div>
+        </div>
+
     </div>
+
+    <script>
+        $(function () {
+            $("#select_all").click(function () {
+                if ($("#select_all").attr("checked")) {
+                    $("input[name='organ_item']").attr("checked", true);
+                } else {
+                    $("input[name='organ_item']").attr("checked", false);
+                }
+            })
+
+            //设置CSRF
+            $.ajaxSetup({
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+            });
+
+            $("#batch_btn").click(function () {
+                var operate_type = $("#operate_type").val();
+                var organ_id_list = [];
+                var arrchk = $("input[name='organ_item']:checked");
+                $(arrchk).each(function () {
+                    //organ_id_list.append(this.id);
+                    organ_id_list.push(this.id);
+                });
+                if (operate_type != "------") {
+                    $.ajax({
+                            url: "/organization/organ_batch/",
+                            type: "post",
+                            traditional: true,  ////加上此项可以传数组
+                            dataType: "json",
+                            data: {
+                                "operate_type": operate_type,
+                                "organ_id_list": organ_id_list
+                            },
+                            success: function (data) {
+                                if (data.status == "success") {
+                                    location.reload();
+                                }
+                            }
+                        }
+                    )
+                }
+            })
+        })
+
+
+    </script>
 {% endblock %}

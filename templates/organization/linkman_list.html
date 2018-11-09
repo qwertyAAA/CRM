@@ -10,21 +10,30 @@
     <h3 align="center">联系人信息列表</h3><br/>
     <div class="container">
         <div class="row">
+            <div class="col-md-2">
+                <select class="form-control" id="operate_type" name="operate_type">
+                    <option value="--------" selected="selected">--------</option>
+                    <option value="batch_del">批量删除</option>
+                </select>
+            </div>
             <div class="col-md-1">
-                <a href="/organization/linkman_add/" class="btn btn-lg btn-primary" role="button">新增联系人</a>
+                <button class="btn btn-warning" id="batch_btn">执行</button>
+            </div>
+            <div class="col-md-1">
+                <a href="/organization/linkman_add/" class="btn btn-primary" role="button">新增联系人</a>
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-1">
-                <a href="/organization/view/" class="btn btn-lg btn-primary" role="button">机构信息</a>
+                <a href="/organization/view/" class="btn btn-primary" role="button">机构信息</a>
             </div>
-            <div class="col-md-5"></div>
+            <div class="col-md-1"></div>
             <form action="/organization/linkman_search/" method="post" name="org_search">
                 {% csrf_token %}
                 <div class="col-md-2">
-                    <input type="text" name="search_key" placeholder="请输入关键字">
+                    <input type="text" class="form-control" name="search_key" placeholder="请输入关键字">
                 </div>
-                <div class="col-md-1">
-                    <select id="search_header" name="header">
+                <div class="col-md-2">
+                    <select id="search_header" class="form-control" name="header">
                         <option value="机构名称">机构名称</option>
                         <option value="姓名">姓名</option>
                         <option value="性别">性别</option>
@@ -33,7 +42,7 @@
                     </select>
                 </div>
                 <div class="col-md-1">
-                    <button type="submit" class="btn btn-primary btn-lg">查询</button>
+                    <button type="submit" class="btn btn-primary">查询</button>
                 </div>
             </form>
         </div>
@@ -41,7 +50,7 @@
         <div class="row">
             <table class="table table-bordered">
                 <tr style="text-align: center">
-                    <th><input type="checkbox" name="select_linkman"></th>
+                    <th><input type="checkbox" id="select_all"></th>
                     <th>编号</th>
                     <th>机构名称</th>
                     <th>姓名</th>
@@ -55,7 +64,7 @@
                 </tr>
                 {% for linkman in linkman_list %}
                     <tr style="text-align: center">
-                        <td><input type="checkbox" name="select_linkman"></td>
+                        <td><input type="checkbox" name="linkman_item" id="{{ linkman.id }}"></td>
                         <td>{{ forloop.counter }}</td>
                         <td>{{ linkman.organ.org_name }}</td>
                         <td>{{ linkman.name }}</td>
@@ -64,7 +73,6 @@
                         {% else %}
                         <td>女</td>
                         {% endif %}
-{#                        <td>{{ linkman.gender }}</th>#}
                         <td>{{ linkman.duty }}</td>
                         <td>{{ linkman.phone }}</td>
                         <td>{{ linkman.email }}</td>
@@ -80,5 +88,71 @@
 
             </table>
         </div>
+        <div class="row">
+            <div id="pagination" class="pull-right">
+                    {% if linkman_list.has_previous %}
+                        <span class="previous"><a href="?page=
+                                {{ linkman_list.previous_page_number }}">&laquo;上一页</a>
+                        </span>
+                    {% else %}
+                        <span class="previous-off">&laquo;上一页</span>
+                    {% endif %}
+                    <span class="active">{{ linkman_list.number }}/{{ linkman_list.paginator.num_pages }}</span>
+                    {% if linkman_list.has_next %}
+                        <span class="next"><a href="?page=
+                                {{ linkman_list.next_page_number }}">下一页
+                            &raquo;</a></span>
+                    {% else %}
+                        <span class="next-off">下一页 &raquo;</span>
+                    {% endif %}
+            </div>
+        </div>
     </div>
+
+    <script>
+        $(function () {
+            $("#select_all").click(function () {
+                if ($("#select_all").attr("checked")) {
+                    $("input[name='linkman_item']").attr("checked", true);
+                } else {
+                    $("input[name='linkman_item']").attr("checked", false);
+                }
+            })
+
+            //设置CSRF
+            $.ajaxSetup({
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+            });
+
+            $("#batch_btn").click(function () {
+                var operate_type = $("#operate_type").val();
+                var linkman_id_list = [];
+                var arrchk = $("input[name='linkman_item']:checked");
+                $(arrchk).each(function () {
+                    //linkman_id_list.append(this.id);
+                    linkman_id_list.push(this.id);
+                });
+                if (operate_type != "------") {
+                    $.ajax({
+                            url: "/organization/linkman_batch/",
+                            type: "post",
+                            traditional: true,  ////加上此项可以传数组
+                            dataType: "json",
+                            data: {
+                                "operate_type": operate_type,
+                                "linkman_id_list": linkman_id_list
+                            },
+                            success: function (data) {
+                                if (data.status == "success") {
+                                    location.reload();
+                                }
+                            }
+                        }
+                    )
+                }
+            })
+        })
+
+
+    </script>
 {% endblock %}

@@ -17,4 +17,6 @@ urlpatterns = [
     url(r'^org_name_check2/$', views.org_name_check2),
     url(r'^linkman_delete/(\d+)/$', views.linkman_delete),
     url(r'^delete/(\d+)/$', views.organ_delete),
+    url(r'^organ_batch/$', views.organ_batch),
+    url(r'^linkman_batch/$', views.linkman_batch),
 ]

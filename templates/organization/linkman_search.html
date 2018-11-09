@@ -7,16 +7,17 @@
     </style>
 {% endblock %}
 {% block organ %}
-    <h3 align="center">搜索到{{ linkman_list | length }}条相关机构信息</h3>
+    <h2 align="center">搜索到{{ linman_count }}条相关机构信息</h2>
+    <br/>
     <div class="container">
         <div class="row">
             <form action="/organization/linkman_search/" method="post" name="org_search">
                 {% csrf_token %}
                 <div class="col-md-2">
-                    <input type="text" name="search_key" placeholder="请输入关键字">
+                    <input type="text" class="form-control" name="search_key" placeholder="请输入关键字">
                 </div>
-                <div class="col-md-1">
-                    <select id="search_header" name="header">
+                <div class="col-md-2">
+                    <select id="search_header" class="form-control" name="header">
                         <option value="机构名称">机构名称</option>
                         <option value="姓名">姓名</option>
                         <option value="性别">性别</option>
@@ -25,51 +26,75 @@
                     </select>
                 </div>
                 <div class="col-md-1">
-                    <button type="submit" class="btn btn-primary btn-lg">查询</button>
+                    <button type="submit" class="btn btn-primary">查询</button>
+                </div>
+                <div class="col-md-1">
+                    <a href="/organization/linkman_list/" class="btn btn-primary" role="button">返回列表</a>
                 </div>
             </form>
         </div>
         <hr/>
-    {% if linkman_list %}
-        <div class="row">
-            <table class="table table-bordered">
-                <tr style="text-align: center">
-                    <th><input type="checkbox"></th>
-                    <th>编号</th>
-                    <th colspan="2">机构名称</th>
-                    <th>姓名</th>
-                    <th>性别</th>
-                    <th>职务</th>
-                    <th>手机</th>
-                    <th>邮箱</th>
-                    <th>重要等级</th>
-                    <th>跟进状态</th>
-                    <th>操作</th>
-                </tr>
-                {% for linkman in linkman_list %}
+        {% if linkman_list %}
+            <div class="row">
+                <table class="table table-bordered">
                     <tr style="text-align: center">
-                        <th><input type="checkbox"></th>
-                        <th>{{ forloop.counter }}</th>
-                        <th colspan="2">{{ linkman.organ.org_name }}</th>
-                        <th>{{ linkman.name }}</th>
-                        <th>{{ linkman.gender }}</th>
-                        <th>{{ linkman.duty }}</th>
-                        <th>{{ linkman.phone }}</th>
-                        <th>{{ linkman.email }}</th>
-                        <th>{{ linkman.link_important }}</th>
-                        <th>{{ linkman.following }}</th>
-                        <th>
-                            <a href="/organization/linkman_edit/{{ linkman.id }}/">编辑</a>
-                            <a href="/organization/linkman_delete/{{ linkman.id }}/">删除</a>
-                            <a href="/organization/linkman_detail/{{ linkman.id }}/">查看</a>
-                        </th>
+                        <th>编号</th>
+                        <th colspan="2">机构名称</th>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>职务</th>
+                        <th>手机</th>
+                        <th>邮箱</th>
+                        <th>重要等级</th>
+                        <th>跟进状态</th>
+                        <th>操作</th>
                     </tr>
-                {% endfor %}
+                    {% for linkman in linkman_list %}
+                        <tr style="text-align: center">
+                            <td>{{ forloop.counter }}</td>
+                            <td colspan="2">{{ linkman.organ.org_name }}</td>
+                            <td>{{ linkman.name }}</td>
+                            {% if linkman.gender %}
+                                <td>男</td>
+                            {% else %}
+                                <td>女</td>
+                            {% endif %}
+                            <td>{{ linkman.duty }}</td>
+                            <td>{{ linkman.phone }}</td>
+                            <td>{{ linkman.email }}</td>
+                            <td>{{ linkman.link_important }}</td>
+                            <td>{{ linkman.following }}</td>
+                            <td>
+                                <a href="/organization/linkman_edit/{{ linkman.id }}/">编辑</a>
+                                <a href="/organization/linkman_delete/{{ linkman.id }}/">删除</a>
+                                <a href="/organization/linkman_detail/{{ linkman.id }}/">查看</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
 
-            </table>
-        </div>
-    {% else %}
-        <h3></h3>
-    {% endif %}
+                </table>
+            </div>
+            <div class="row">
+                <div id="pagination" class="pull-right">
+                    {% if linkman_list.has_previous %}
+                        <span class="previous"><a href="?page=
+                                {{ linkman_list.previous_page_number }}&search_key={{ search_key }}&header={{ header }}">&laquo;上一页</a>
+                        </span>
+                    {% else %}
+                        <span class="previous-off">&laquo;上一页</span>
+                    {% endif %}
+                    <span class="active">{{ linkman_list.number }}/{{ linkman_list.paginator.num_pages }}</span>
+                    {% if linkman_list.has_next %}
+                        <span class="next"><a href="?page=
+                                {{ linkman_list.next_page_number }}&search_key={{ search_key }}&header={{ header }}">下一页
+                            &raquo;</a></span>
+                    {% else %}
+                        <span class="next-off">下一页 &raquo;</span>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <h3></h3>
+        {% endif %}
     </div>
 {% endblock %}

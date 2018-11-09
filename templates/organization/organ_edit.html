@@ -30,8 +30,11 @@
         }
     </style>
 {% endblock %}
+{% block js %}
+    <script src="/static/pronvince_city.js" type="text/javascript"></script>
+{% endblock %}
 {% block organ %}
-    <h3 align="center">编辑机构信息</h3><br/><br/>
+    <h3 align="center" id="organ_title">编辑机构信息</h3><br/><br/>
     <span class="fenlei">基本信息：</span><span class="bitian">注：带有“ * ”必填项</span>
     <hr/>
     <form action="/organization/edit/{{ organ_obj.id }}/" method="post">
@@ -87,7 +90,7 @@
                     <span>省份：</span>
                 </div>
                 <div class="col-xs-10">
-                    <input type="text" name="province" id="province" size="30">
+                    <select id="province" name="province">请选择省份</select>
                     <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
                 </div>
             </div>
@@ -96,7 +99,7 @@
                     <span>城市：</span>
                 </div>
                 <div class="col-xs-10">
-                    <input type="text" name="city" id="city" size="30">
+                    <select id="city" name="city">请选择城市</select>
                     <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
                 </div>
             </div>
@@ -134,7 +137,11 @@
                     <span>区域等级：</span>
                 </div>
                 <div class="col-xs-10">
-                    <input type="text" name="area_level" id="area_level" size="20">
+                    <select name="area_level" id="area_level">
+                        <option value="省级">省级</option>
+                        <option value="市级">市级</option>
+                        <option value="县级">县级</option>
+                    </select>
                     <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
                 </div>
             </div>
@@ -157,7 +164,11 @@
                     <span>采购级别：</span>
                 </div>
                 <div class="col-xs-10">
-                    <input type="text" name="pur_level" id="pur_level" size="20">
+                    <select name="pur_level" id="pur_level">
+                        <option value="不确定">不确定</option>
+                        <option value="一般">一般</option>
+                        <option value="重要">重要</option>
+                    </select>
                 </div>
             </div>
             <div class="row">
@@ -183,7 +194,11 @@
                     <span>审核状态：</span>
                 </div>
                 <div class="col-xs-10">
-                    <input type="text" name="check_status" id="check_status" size="30">
+                    <select name="check_status" id="check_status">
+                        <option value="未审核">未审核</option>
+                        <option value="审核中">审核中</option>
+                        <option value="已审核">已审核</option>
+                    </select>
                     <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
                 </div>
             </div>
@@ -192,7 +207,11 @@
                     <span>机构类型：</span>
                 </div>
                 <div class="col-xs-10">
-                    <input type="text" name="org_category" id="org_category" size="30">
+                    <select name="org_category" id="org_category">
+                        <option value="重要客户">重要客户</option>
+                        <option value="一般客户">一般客户</option>
+                        <option value="低价值客户">低价值客户</option>
+                    </select>
                     <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
                 </div>
             </div>
@@ -201,7 +220,14 @@
                     <span>跟进状态：</span>
                 </div>
                 <div class="col-xs-10">
-                    <input type="text" name="follow_status" id="follow_status" size="30">
+                    <select name="follow_status" id="follow_status">
+                        <option value="初访">初访</option>
+                        <option value="意向">意向</option>
+                        <option value="潜在">潜在</option>
+                        <option value="报价">报价</option>
+                        <option value="成交">成交</option>
+                        <option value="暂时搁置">暂时搁置</option>
+                    </select>
                     <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
                 </div>
             </div>
@@ -239,6 +265,7 @@
             $.ajax({
                 url: "/organization/detail/" + "{{ organ_obj.id }}/",
                 success: function (data) {
+                    $("#organ_title").text("编辑机构信息（" + data[0].org_name + "）");
                     $("#org_name").val(data[0].org_name);
                     $("#org_address").val(data[0].org_address);
                     $("#mobile").val(data[0].mobile);
@@ -277,5 +304,25 @@
         })
 
 
+        $.each(
+            GP, function (i) {
+                $("#province").append("<option value='" + GP[i] + "'>" + GP[i] + "</option>");
+            }
+        );
+
+        $("#province").change(
+            function () {
+                var s = GP.indexOf($("#province").val());
+                $("#city").get(0).selectedIndex = 0;
+                if (s != "请选择省份") {
+                    $("#city").empty();
+                    $.each(
+                        GT[s], function (i) {
+                            $("#city").append("<option value='" + GT[s][i] + "'>" + GT[s][i] + "</option>");
+                        }
+                    );
+                }
+            }
+        );
     </script>
 {% endblock %}

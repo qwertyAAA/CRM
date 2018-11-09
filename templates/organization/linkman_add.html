@@ -35,19 +35,28 @@
     </style>
 {% endblock %}
 {% block organ %}
-    <h3 align="center">创建联系人信息</h3><br/><br/>
-    <span class="fenlei">联系人基本信息：</span><span class="bitian">注：带有“ * ”必填项</span>
+    <h2 align="center">创建联系人信息</h2><br/><br/>
+    <div><span class="fenlei">联系人基本信息：</span></div>
+    <br/>
+    <div>
+        <span class="must pull-left">注：联系人信息为机构信息的补充，添加联系人前请确保对应机构信息已经添加！</span>
+        <span class="must pull-right">注：带有“ * ”必填项</span>
+    </div>
+    <br/>
     <hr/>
     <form action="/organization/linkman_add/" method="post">
         {% csrf_token %}
         <div class="container">
+            <div class="row">
+
+            </div>
             <div class="row">
                 <div class="col-xs-2">
                     <span>机构名称：</span>
                 </div>
                 <div class="col-xs-10">
                     <input type="text" id="organ_name" name="organ_name" size="70">
-                    <button type="button" id="org_name_select" class="btn btn-info">查询</button>
+                    <button type="button" id="org_name_select" class="btn btn-info btn-sm">查询</button>
                     <span id="massage"></span>
                     <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
                 </div>
@@ -122,7 +131,11 @@
                     <span>重要等级：</span>
                 </div>
                 <div class="col-xs-10">
-                    <input type="text" name="link_important" size="20">
+                    <select name="link_important" id="link_important">
+                        <option value="一般">一般</option>
+                        <option value="重要">重要</option>
+                        <option value="非常重要">非常重要</option>
+                    </select>
                     <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
                 </div>
             </div>
@@ -131,7 +144,12 @@
                     <span>跟进状态：</span>
                 </div>
                 <div class="col-xs-10">
-                    <input type="text" name="following" size="20">
+                    <select name="following" id="following">
+                        <option value="未处理">未处理</option>
+                        <option value="有效">有效</option>
+                        <option value="无效">无效</option>
+                        <option value="放弃">放弃</option>
+                    </select>
                     <span class="must">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>
                 </div>
             </div>
@@ -198,16 +216,18 @@
                 $.ajaxSetup({
                     data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
                 });
-                $.post(
-                    "/organization/org_name_check/",
-                    {
-                        "organ_name": $("#organ_name").val()
-                    },
-                    function (data) {
-                        $("#massage").text(data["message"]);
-                        $("#organ_name").focus();
-                    }
-                );
+                if ($("#organ_name").val() != "" && $("#organ_name").val() != null) {
+                    $.post(
+                        "/organization/org_name_check/",
+                        {
+                            "organ_name": $("#organ_name").val()
+                        },
+                        function (data) {
+                            $("#massage").text(data["message"]);
+                            $("#organ_name").focus();
+                        }
+                    );
+                }
 
 
             });

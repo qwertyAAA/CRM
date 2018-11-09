@@ -8,8 +8,12 @@
     </style>
 {% endblock %}
 {% block organ %}
-    <h3 align="center">联系人详情</h3><br/><br/>
-    <h4 align="left">联系人基本信息</h4>
+    <h2 align="center">联系人详情（{{ linkman_obj.name }}）</h2><br/><br/>
+    <h3 align="left">联系人基本信息</h3>
+    <div class="pull-right">
+        <a href="/organization/linkman_edit/{{ linkman_obj.id }}" class="btn btn-primary" role="button">编辑</a>
+        <a href="/organization/linkman_list/" class="btn btn-primary" role="button">返回列表</a>
+    </div>
     <hr/>
     <div class="container">
         <div class="row">
@@ -54,7 +58,7 @@
         <br/><br/>
         <div class="row">
             <div class="col-md-2 col-md-offset-5">
-                <a href="/organization/"><button type="button" class="btn btn-default btn-lg">关闭</button></a>
+                <a href="/organization/linkman_list/"><button type="button" class="btn btn-default btn-lg">关闭</button></a>
             </div>
         </div>
         <br/><br/><br/>

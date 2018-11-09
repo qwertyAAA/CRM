@@ -1,14 +1,27 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import HttpResponseRedirect, JsonResponse
+from django.core.paginator import Paginator, InvalidPage, EmptyPage, PageNotAnInteger
 from .models import *
 from django.apps import apps
 import json
 
 
 # Create your views here.
+# 分页代码
+def getPage(request, article_list):
+    paginator = Paginator(article_list, 2)
+    try:
+        page = int(request.GET.get('page', 1))
+        article_list = paginator.page(page)
+    except (EmptyPage, InvalidPage, PageNotAnInteger):
+        article_list = paginator.page(1)
+    return article_list
+
+
 # 机构信息列表
 def organ_view(request):
     organ_list = Organ.objects.all()
+    organ_list = getPage(request, organ_list)
     model_obj = apps.get_model("organization", "Organ")
     organ_field = model_obj._meta.fields
     header_list = []
@@ -115,32 +128,67 @@ def organ_detail(request, id):
             return JsonResponse(org_obj, safe=False)
 
 
+# 搜索机构信息的查询方法
+def getorgan(header, search_key):
+    if header == "机构名称":
+        organ_list = Organ.objects.filter(org_name__icontains=search_key)
+    elif header == "省份":
+        organ_list = Organ.objects.filter(province__icontains=search_key)
+    elif header == "城市":
+        organ_list = Organ.objects.filter(city__icontains=search_key)
+    elif header == "行业类别":
+        organ_list = Organ.objects.filter(industry__icontains=search_key)
+    elif header == "分配情况":
+        if search_key == "已分配":
+            organ_list = Organ.objects.filter(distribution__exact=1)
+        elif search_key == "未分配":
+            organ_list = Organ.objects.filter(distribution__exact=0)
+        else:
+            organ_list = Organ.objects.filter(distribution__icontains=search_key)
+    elif header == "机构类型":
+        organ_list = Organ.objects.filter(org_category__icontains=search_key)
+    elif header == "跟进状态":
+        organ_list = Organ.objects.filter(follow_status__icontains=search_key)
+    return organ_list
+
+
 # 搜索机构信息
 def organ_search(request):
     if request.method == "POST":
         search_key = request.POST.get("search_key", None)
-        print(search_key,"********")
+        print(search_key, "********")
         header = request.POST.get("header", None)
-        if header == "机构名称":
-            organ_list = Organ.objects.filter(org_name__icontains=search_key)
-        elif header == "省份":
-            organ_list = Organ.objects.filter(province__icontains=search_key)
-        elif header == "城市":
-            organ_list = Organ.objects.filter(city__icontains=search_key)
-        elif header == "行业类别":
-            organ_list = Organ.objects.filter(industry__icontains=search_key)
-        elif header == "分配情况":
-            organ_list = Organ.objects.filter(distribution__icontains=search_key)
-        elif header == "机构类型":
-            organ_list = Organ.objects.filter(org_category__icontains=search_key)
-        elif header == "跟进状态":
-            organ_list = Organ.objects.filter(follow_status__icontains=search_key)
-        return render(request, "organization/organ_search.html", {"organ_list": organ_list, "header": header})
+        organ_list = getorgan(header, search_key)
+        organ_count = len(organ_list)
+        organ_list = getPage(request, organ_list)
+        return render(request, "organization/organ_search.html", locals())
+    elif request.method == "GET":
+        search_key = request.GET.get("search_key", None)
+        header = request.GET.get("header", None)
+        organ_list = getorgan(header, search_key)
+        organ_count = len(organ_list)
+        organ_list = getPage(request, organ_list)
+        return render(request, "organization/organ_search.html", locals())
+
+
+# 机构信息列表批量操作
+def organ_batch(request):
+    if request.is_ajax():
+        data = {}
+        operate_type = request.POST.get("operate_type", None)
+        print(operate_type, "****")
+        organ_id_list = request.POST.getlist("organ_id_list", None)
+        print("****", organ_id_list)
+        if operate_type == "batch_del":
+            Organ.objects.filter(id__in=organ_id_list).delete()
+            data["status"] = "success"
+            return JsonResponse(data)
 
 
 # 联系人列表
 def linkman_view(request):
     linkman_list = Linkman.objects.all()
+    linkman_list = getPage(request, linkman_list)
     model_obj = apps.get_model("organization", "Linkman")
     linkman_field = model_obj._meta.fields
     header_list = []
@@ -211,17 +259,20 @@ def linkman_detail(request, id):
         if linkman_obj:
             return render(request, "organization/linkman_detail.html", {"linkman_obj": linkman_obj})
     elif request.is_ajax():
+        # data_obj = {}
         linkman_id = int(id)
         linkman_obj = list(Linkman.objects.filter(id=linkman_id).values(
             "organ__org_name", "name", "gender", "duty", "phone", "email", "QQ",
             "adress", "link_important", "following", "link_agent", "isaccept", "remark"
         ))
+        org_name = Organ.objects.filter(linkman__id=linkman_id).first().org_name
         if linkman_obj:
+            linkman_obj.append(org_name)
             print(linkman_obj, "***********")
             return JsonResponse(linkman_obj, safe=False)
 
 
-#删除联系人
+# 删除联系人
 def linkman_delete(request, id):
     linkman_id = int(id)
     Linkman.objects.filter(id=linkman_id).delete()
@@ -234,7 +285,7 @@ def linkman_delete(request, id):
     return render(request, "organization/linkman_list.html", {"linkman_list": linkman_list, "header_list": header_list})
 
 
-#删除机构信息
+# 删除机构信息
 def organ_delete(request, id):
     organ_id = int(id)
     Organ.objects.filter(id=organ_id).delete()
@@ -247,26 +298,61 @@ def organ_delete(request, id):
         header_list.append(f.verbose_name)
     return render(request, "organization/organ_list.html", {"organ_list": organ_list, "header_list": header_list})
 
+
+# 联系人搜索的查询方法
+def getlinkman(header, search_key):
+    if header == "机构名称":
+        linkman_list = Linkman.objects.filter(organ__org_name__icontains=search_key)
+    elif header == "姓名":
+        linkman_list = Linkman.objects.filter(name__icontains=search_key)
+    elif header == "性别":
+        if search_key == "男":
+            linkman_list = Linkman.objects.filter(gender__exact=1)
+        elif search_key == "女":
+            linkman_list = Linkman.objects.filter(gender__exact=0)
+        else:
+            linkman_list = Linkman.objects.filter(gender__icontains=search_key)
+    elif header == "重要等级":
+        linkman_list = Linkman.objects.filter(link_important__icontains=search_key)
+    elif header == "跟进状态":
+        linkman_list = Linkman.objects.filter(following__icontains=search_key)
+    return linkman_list
+
+
 # 搜索联系人
 def linkman_search(request):
     if request.method == "POST":
         search_key = request.POST.get("search_key", None)
-        print(search_key,"********")
+        print(search_key, "********")
         header = request.POST.get("header", None)
-        if header == "机构名称":
-            linkman_list = Linkman.objects.filter(organ__org_name__icontains=search_key)
-        elif header == "姓名":
-            linkman_list = Linkman.objects.filter(name__icontains=search_key)
-        elif header == "性别":
-            linkman_list = Linkman.objects.filter(gender__icontains=search_key)
-        elif header == "重要等级":
-            linkman_list = Linkman.objects.filter(link_important__icontains=search_key)
-        elif header == "跟进状态":
-            linkman_list = Linkman.objects.filter(following__icontains=search_key)
-        return render(request, "organization/linkman_search.html", {"linkman_list": linkman_list, "header": header})
+        linkman_list = getlinkman(header, search_key)
+        linman_count = len(linkman_list)
+        linkman_list = getPage(request, linkman_list)
+        return render(request, "organization/linkman_search.html", locals())
+    elif request.method == "GET":
+        search_key = request.GET.get("search_key", None)
+        header = request.GET.get("header", None)
+        linkman_list = getlinkman(header, search_key)
+        linman_count = len(linkman_list)
+        linkman_list = getPage(request, linkman_list)
+        return render(request, "organization/linkman_search.html", locals())
 
 
-#添加联系人时检查机构名是否可添加
+# 联系人信息列表批量操作
+def linkman_batch(request):
+    if request.is_ajax():
+        data = {}
+        operate_type = request.POST.get("operate_type", None)
+        print(operate_type, "****")
+        linkman_id_list = request.POST.getlist("linkman_id_list", None)
+        print("****", linkman_id_list)
+        if operate_type == "batch_del":
+            Linkman.objects.filter(id__in=linkman_id_list).delete()
+            data["status"] = "success"
+            return JsonResponse(data)
+
+
+# 添加联系人时检查机构名是否可添加
 def org_name_check(request):
     if request.method == "POST":
         data = {}
@@ -282,7 +368,7 @@ def org_name_check(request):
     return JsonResponse(data, safe=False)
 
 
-#添加机构信息时检查机构名是否已添加
+# 添加机构信息时检查机构名是否已添加
 def org_name_check2(request):
     if request.method == "POST":
         data = {}

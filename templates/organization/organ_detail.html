@@ -7,8 +7,12 @@
     </style>
 {% endblock %}
 {% block organ %}
-    <h3 align="center">机构信息详情</h3><br/><br/>
-    <h4 align="left">基本信息</h4>
+    <h2 align="center">{{ org_obj.org_name }}（详情）</h2><br/><br/>
+    <h3 align="left">基本信息</h3>
+    <div class="pull-right">
+        <a href="/organization/edit/{{ org_obj.id }}" class="btn btn-primary" role="button">编辑</a>
+        <a href="/organization/" class="btn btn-primary" role="button">返回列表</a>
+    </div>
     <hr/>
     <div class="container">
         <div class="row">
@@ -61,7 +65,7 @@
         </div>
     </div>
     <br/><br/>
-    <h4 align="left">基本信息</h4>
+    <h3 align="left">其他信息</h3>
     <div class="container">
         <div class="row">
             <div class="col-md-6">
