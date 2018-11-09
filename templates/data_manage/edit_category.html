@@ -1,0 +1,64 @@
+{% extends 'MOM.html' %}
+{% block add_data %}
+    <style>
+        #dataname{
+            width: 500px;
+            margin-right: 5px;
+        }
+        .addpage{
+            width: 300px;
+            margin-right: 5px;
+        }
+        .row{
+            margin-bottom: 20px;
+        }
+    </style>
+    <form id="dataform" action="/data_manage/edit_category/{{ category.id }}/" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <p><span>基本类别信息</span><span class="pull-right">所有项均为必填项</span></p>
+            <hr>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-lg-8">
+                <label for="dataname">类别名称</label>
+
+                <input type="text" class="form-control suffix" id="dataname" name="category_name" value="{{ categroy.title}}">
+                <input type="text" name="category_id"  style="display: none" value="{{ category.id }}">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" id="databtn">提交</button>
+        <a href="/data_manage/check_category/" class="btn btn-danger">取消</a>
+    </form>
+{#<script src="/static/bootstrap/js/edit&add_category_op.js">#}
+{#</script>#}
+<script>
+        $('#dataform').submit(function () {
+            var newname=$('#dataname').val();
+            var flag=false;
+            var titlelist= {{ titlelist|safe }};
+            for (i = 0; i < titlelist.length; i++)
+            {
+                if (newname == titlelist[i])
+                {
+                    alert('该类别名已经存在');
+                    return false
+                }
+            }
+            if (newname)
+            {
+                if (newname in titlelist){
+                    return false
+                }
+                else {
+                    return true
+                }
+            }
+            else {
+                alert('请填写类别名称');
+                return false
+            }
+        });
+    </script>
+{% endblock %}

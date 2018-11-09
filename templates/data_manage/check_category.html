@@ -1,0 +1,72 @@
+{% extends 'MOM.html' %}
+{% block check_data %}
+<div class="row">
+    <h3 style="text-align: center;font-weight: bolder">文件列表</h3>
+    <hr>
+</div>
+
+<div class="row" style="margin-bottom: 3px">
+    <div class="col-lg-1">
+        <form action="/data_manage/add_category/" method="get">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">新增类别</button>
+        </form>
+    </div>
+    <div class="col-lg-1">
+        <button type="button" id="deletebt" class="btn btn-danger">删除类别</button>
+    </div>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="form-group col-lg-3 col-lg-offset-6">
+            <label class="sr-only" for="exampleInputEmail3">搜索框</label>
+            {% if keyword == '' %}
+                <input type="text" class="form-control" name="keyword" id="exampleInputEmail3" placeholder="请根据编号或者类别名查找">
+            {% else %}
+                <input type="text" class="form-control" name="keyword" id="exampleInputEmail3" placeholder="请根据编号或者类别名查找" value="{{ keyword }}">
+            {% endif %}
+        </div>
+        <div class="col-lg-1">
+            <button type="submit" class="btn btn-primary">查询</button>
+        </div>
+    </form>
+
+
+</div>
+
+<div class="row">
+    <div>
+        <table class="table table-bordered">
+            <thead>
+                <td><input type="checkbox" id="all" name="checkbox"></td>
+                <td>编号</td>
+                <td>名称</td>
+                <td>操作</td>
+            </thead>
+            <tbody>
+                {% for category in category_list %}
+                    <tr>
+                        <td><input type="checkbox" class="one" dataid="{{ category.id }}"></td>
+                        <td class="dataid">{{ category.id }}</td>
+                        <td>{{ category.title }}</td>
+                        <td>
+                            <a href="/data_manage/edit_category/{{ category.id }}/">编辑</a>
+                            <a href="/data_manage/delete_category/?id={{ category.id }}">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    {% include 'data_manage/checkdata_page.html' %}
+</div>
+
+    <script src="/static/bootstrap/js/check_category_op.js"></script>
+
+
+
+
+
+{% endblock %}
