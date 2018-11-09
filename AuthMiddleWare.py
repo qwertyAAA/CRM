@@ -1,14 +1,18 @@
 from django.utils.deprecation import MiddlewareMixin
-from django.shortcuts import redirect
+from django.shortcuts import HttpResponse
 
 
 class CheckAuth(MiddlewareMixin):
 
     @staticmethod
     def process_request(request):
-        current_permission = request.session.get("permission")["role_permission"]
-        current_permission.append(request.session.get("permission")["data_permission"])
-        if request.path in current_permission:
+        white_list = ["/", "/login/", "/register/", "/index/", "/get_valid_img.png/", "/logout/"]
+        if request.path_info in white_list:
             return
-        else:
-            return redirect("/index/")
+        current_permission = request.session.get("role_permission")
+        print(current_permission)
+        print(request.path_info)
+        user_url = request.path_info.split("/")[-2]
+        user_url += "/"
+        if user_url not in current_permission:
+            return HttpResponse("您没有权限！")

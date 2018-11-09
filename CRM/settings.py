@@ -52,9 +52,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 用户验证中间件
-    # "CheckLoginMiddleWare.CheckLogin",
+    "CheckLoginMiddleWare.CheckLogin",
     # 权限管理中间件
-    # "AuthMiddleWare.CheckAuth"
+    "AuthMiddleWare.CheckAuth"
 ]
 
 ROOT_URLCONF = 'CRM.urls'
