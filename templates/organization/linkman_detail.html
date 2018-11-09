@@ -1,0 +1,67 @@
+{% extends "MOM.html" %}
+{% block css %}
+    <style>
+        .row {
+            margin-top: 20px;
+            margin-left: 30px;
+        }
+    </style>
+{% endblock %}
+{% block organ %}
+    <h2 align="center">联系人详情（{{ linkman_obj.name }}）</h2><br/><br/>
+    <h3 align="left">联系人基本信息</h3>
+    <div class="pull-right">
+        <a href="/organization/linkman_edit/{{ linkman_obj.id }}" class="btn btn-primary" role="button">编辑</a>
+        <a href="/organization/linkman_list/" class="btn btn-primary" role="button">返回列表</a>
+    </div>
+    <hr/>
+    <div class="container">
+        <div class="row">
+            机构名称：{{ linkman_obj.organ.org_name }}
+        </div>
+        <div class="row">
+            姓名：{{ linkman_obj.name }}
+        </div>
+        <div class="row">
+            性别：{% if linkman_obj.gender %}男{% else %}女{% endif %}
+        </div>
+        <div class="row">
+            职务：{{ linkman_obj.duty }}
+        </div>
+        <div class="row">
+            手机：{{ linkman_obj.phone }}
+        </div>
+        <div class="row">
+            邮箱：{{ linkman_obj.email }}
+        </div>
+        <div class="row">
+            QQ：{{ linkman_obj.QQ }}
+        </div>
+        <div class="row">
+            地址：{{ linkman_obj.adress }}
+        </div>
+        <div class="row">
+            重要等级：{{ linkman_obj.link_important }}
+        </div>
+        <div class="row">
+            跟进状态：{{ linkman_obj.following }}
+        </div>
+        <div class="row">
+            经办人：{{ linkman_obj.link_agent }}
+        </div>
+        <div class="row">
+            是否认可：{% if linkman_obj.isaccept %}是{% else %}否{% endif %}
+        </div>
+        <div class="row">
+            备注：{{ linkman_obj.remark }}
+        </div>
+        <br/><br/>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-5">
+                <a href="/organization/linkman_list/"><button type="button" class="btn btn-default btn-lg">关闭</button></a>
+            </div>
+        </div>
+        <br/><br/><br/>
+    </div>
+
+{% endblock %}

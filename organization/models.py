@@ -6,11 +6,10 @@ from django.db import models
 # 机构信息表
 class Organ(models.Model):
     # 基本信息
-    org_name = models.CharField(max_length=50, blank=False, null=False, verbose_name="机构名称")
+    org_name = models.CharField(max_length=50, unique=True, blank=False, null=False, verbose_name="机构名称")
     org_address = models.CharField(max_length=100, blank=False, null=False, verbose_name="机构地址")
-    linkman = models.OneToOneField("Linkman", blank=False, null=False, verbose_name="联系人")
-    mobile = models.IntegerField(blank=False, null=False, verbose_name="手机")
-    tel = models.IntegerField(blank=False, null=False, verbose_name="电话")
+    mobile = models.CharField(max_length=11, blank=False, null=False, verbose_name="手机")
+    tel = models.CharField(max_length=11, blank=False, null=False, verbose_name="电话")
     country = models.CharField(max_length=20, blank=True, null=True, verbose_name="国家")
     province = models.CharField(max_length=20, blank=False, null=False, verbose_name="省份")
     city = models.CharField(max_length=20, blank=False, null=False, verbose_name="城市")
@@ -36,18 +35,20 @@ class Organ(models.Model):
 
 # 联系人信息表
 class Linkman(models.Model):
+    organ = models.OneToOneField("Organ", blank=False, null=False, default=None, verbose_name="机构名称")
     name = models.CharField(max_length=10, blank=False, null=False, verbose_name="姓名")
     gender = models.BooleanField(blank=False, null=False, verbose_name="性别")
     duty = models.CharField(max_length=10, blank=False, null=False, verbose_name="职务")
-    phone = models.IntegerField(blank=False, null=False, verbose_name="手机")
+    phone = models.CharField(max_length=11, blank=False, null=False, verbose_name="手机")
     email = models.EmailField(blank=False, null=False, verbose_name="邮箱")
-    QQ = models.IntegerField(blank=False, null=False, verbose_name="QQ")
-    address = models.CharField(max_length=50, blank=True, null=True, verbose_name="地址")
+    QQ = models.CharField(max_length=11, blank=False, null=False, verbose_name="QQ")
+    adress = models.CharField(max_length=50, blank=True, null=True, verbose_name="地址")
     link_important = models.CharField(max_length=10, blank=False, null=False, verbose_name="重要等级")
     following = models.CharField(max_length=10, blank=False, null=False, verbose_name="跟进状态")
     link_agent = models.CharField(max_length=20, blank=False, null=False, verbose_name="经办人")
-    is_accept = models.BooleanField(blank=False, null=False, verbose_name="是否认可")
+    isaccept = models.BooleanField(blank=False, null=False, verbose_name="是否认可")
     remark = models.TextField(max_length=200, blank=True, null=True, verbose_name="备注")
 
     def __str__(self):
         return "%s--%s" % (self.name, self.organ.org_name)
+
